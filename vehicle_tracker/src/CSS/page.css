@@ -1,0 +1,29 @@
+a {
+  text-decoration: none;
+  font-size: large;
+  font-weight: bold;
+  color: red;
+}
+
+a:hover {
+  color: blue;
+}
+
+a.activeClass {
+  color: green;
+}
+
+.nav_bar {
+  flex-direction: row;
+  background-color: darkturquoise;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 50px;
+}
+
+.maps {
+  margin-left: 5%;
+  margin-top: 5%;
+}
