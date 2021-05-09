@@ -1,12 +1,9 @@
 import React from 'react';
+
 import {LoadScript, GoogleMap} from '@react-google-maps/api';
-const AnyReactComponent = ({text}) => <div>{text}</div>;
+
 function Map({center = {}, zoom}) {
-  function handleApiLoaded(map, maps) {}
-  const mapStyles = {
-    height: '50vh',
-    width: '50%',
-  };
+  //function handleApiLoaded(map, maps) {}
   const defaultCenter = {
     lat: 41.3851,
     lng: 2.1734,
@@ -23,5 +20,10 @@ function Map({center = {}, zoom}) {
     </>
   );
 }
+
 export default Map;
 //bootstrapURLKeys={{key: 'AIzaSyB5-a_N4wZHXxPEFn4g7AzrDmmNIyQeMPM'}}
+const mapStyles = {
+  height: 'calc(100vh - 60px)',
+  width: '100%',
+};
