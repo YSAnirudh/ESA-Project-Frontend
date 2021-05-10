@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {PageContainer} from './Elements/HomeElem';
-//import Map from '../Components/Map';
+import Maps from '../Components/Map';
 import {homeStart, homeRide, payment} from '../Constants/RouteInfo';
 import BackVid from '../Components/BackVideo';
 import HomeStart from './HomeComponents/HomeStart';
 import HomeRide from './HomeComponents/HomeRide';
+import {MapElements} from '../Components/MapElem';
 
 function Home({path}) {
   const [isMapOpen, setIsMapOpen] = useState(false);
@@ -15,13 +16,16 @@ function Home({path}) {
 
   if (String.prototype.valueOf(path) === String.prototype.valueOf(homeStart)) {
     return (
-      <>
-        <PageContainer>
-          <BackVid />
-          <HomeStart />
-          {/* <Map /> */}
-        </PageContainer>
-      </>
+      <PageContainer>
+        {isMapOpen ? (
+          <Maps isMapVisible={isMapOpen} toggleMap={toggle} />
+        ) : (
+          <>
+            <BackVid />
+            <HomeStart isMapVisible={isMapOpen} toggleMap={toggle} />
+          </>
+        )}
+      </PageContainer>
     );
   } else if (path === homeRide) {
     console.log('noob');

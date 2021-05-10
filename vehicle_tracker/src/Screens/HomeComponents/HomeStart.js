@@ -11,37 +11,48 @@ import {
   MapIcon,
 } from '../Elements/HomeElem';
 import {FaMapMarked} from 'react-icons/fa';
-import Map from '../../Components/Map';
+// import Maps from '../../Components/Map';
+// import {
+//   MapElements,
+//   ButtonWrapper as MapButtonWrapper,
+// } from '../../Components/MapElem';
+// import {IoIosArrowDown} from 'react-icons/io';
+const HomeStart = ({isMapVisible, toggleMap}) => {
+  const [isTextActive, setIsTextActive] = useState(false);
 
-const HomeStart = () => {
-  const [isMapVisible, setIsMapVisible] = useState(false);
-  const toggleMap = () => {
-    setIsMapVisible(!isMapVisible);
+  const toggleTextActive = () => {
+    setIsTextActive(!isTextActive);
   };
+
   return (
     <>
-      {isMapVisible ? <Map /> : <></>}
       <DetailsContainer>
         <TextContainer>Start You Ride Now!</TextContainer>
         <TextContainer>With AppName</TextContainer>
         <TextInputContainer>
           <ButtonText>Start</ButtonText>
-          <TextInput id="start" placeholder="Start Point" />
+          <TextInput
+            id="start"
+            placeholder="Start Point"
+            onChange={() => toggleTextActive()}
+          />
           <MapIcon>
-            <FaMapMarked size={17} onClick={toggleMap} />
+            <FaMapMarked size={17} onClick={() => toggleMap()} />
           </MapIcon>
         </TextInputContainer>
-        <TextInputContainer>
+        {/* <TextInputContainer>
           <ButtonText>End</ButtonText>
           <TextInput id="end" placeholder="Destination" />
           <MapIcon>
             <FaMapMarked size={17} onClick={toggleMap} />
           </MapIcon>
-        </TextInputContainer>
+        </TextInputContainer> */}
         <ButtonWrapper>
           <ButtonRoute to={homeRide}>Get Started</ButtonRoute>
         </ButtonWrapper>
       </DetailsContainer>
+      {/* </>
+      )} */}
     </>
   );
 };
