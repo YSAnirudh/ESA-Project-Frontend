@@ -14,7 +14,9 @@ import {
   history,
   account,
   login,
-  signup,
+  register,
+  homeAfterLogin,
+  root,
 } from '../../Constants/RouteInfo';
 
 const SideBar = ({isOpen, toggle, isLogin}) => {
@@ -32,7 +34,7 @@ const SideBar = ({isOpen, toggle, isLogin}) => {
             </SideBarBtnWrap>
 
             <SideBarBtnWrap>
-              <SideBarRoute to={signup}>SignUp</SideBarRoute>
+              <SideBarRoute to={register}>Register</SideBarRoute>
             </SideBarBtnWrap>
           </SideBarWrapper>
         </SideBarContainer>
@@ -56,7 +58,7 @@ const SideBar = ({isOpen, toggle, isLogin}) => {
             </SideBarLink>
           </SideBarMenu>
           <SideBarBtnWrap>
-            <SideBarRoute to="/">Hello</SideBarRoute>
+            <SideBarRoute to={root}>Log Out</SideBarRoute>
           </SideBarBtnWrap>
         </SideBarWrapper>
       </SideBarContainer>

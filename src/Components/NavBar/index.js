@@ -14,7 +14,9 @@ import {
   history,
   account,
   login,
-  signup,
+  register,
+  homeAfterLogin,
+  root,
 } from '../../Constants/RouteInfo';
 //import {IoPerson} from 'react-icons/io5';
 
@@ -25,7 +27,7 @@ function NavBar({toggle, isLogin}) {
       return (
         <Nav>
           <NavContainter>
-            <NavLogo exact activeClassName="activeClass" to="/">
+            <NavLogo exact activeClassName="activeClass" to={root}>
               AppName
             </NavLogo>
             <MobileIcon onClick={toggle}>
@@ -36,7 +38,7 @@ function NavBar({toggle, isLogin}) {
                 <NavLinks to={login}>Login</NavLinks>
               </NavItem>
               <NavItem>
-                <NavLinks to={signup}>SignUp</NavLinks>
+                <NavLinks to={register}>Register</NavLinks>
               </NavItem>
             </NavMenu>
           </NavContainter>
@@ -46,7 +48,7 @@ function NavBar({toggle, isLogin}) {
     return (
       <Nav>
         <NavContainter>
-          <NavLogo exact activeClassName="activeClass" to="/">
+          <NavLogo exact activeClassName="activeClass" to={homeAfterLogin}>
             AppName
           </NavLogo>
           <MobileIcon onClick={toggle}>

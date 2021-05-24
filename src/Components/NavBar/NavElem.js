@@ -43,6 +43,8 @@ export const MobileIcon = styled.div`
     position: absolute;
     top: 0;
     right: 0;
+    margin-top: -10px;
+    margin-bottom: 100px;
     transform: translate(-100%, 60%);
     font-size: 1.5rem;
     cursor: pointer;
@@ -55,6 +57,7 @@ export const NavMenu = styled.ul`
   align-items: center;
   list-style: none;
   text-align: center;
+  margin-top: 2.2vh;
   margin-right: -22px;
 
   @media screen and (max-width: 650px) {

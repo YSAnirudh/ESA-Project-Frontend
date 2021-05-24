@@ -14,6 +14,7 @@ import {
   homeRide,
   payment,
   homeRiding,
+  homeAfterLogin,
 } from '../Constants/RouteInfo';
 import Payment from './Payment';
 
@@ -29,7 +30,7 @@ function Start() {
       <SideBar isOpen={isOpen} toggle={updateIsOpen} isLogin={false} />
       <NavBar toggle={updateIsOpen} isLogin={false} />
       <Switch>
-        <Route exact path="/" />
+        <Route exact path={homeAfterLogin} />
         <Route
           exact
           path={homeStart}
