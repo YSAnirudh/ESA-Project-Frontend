@@ -26,8 +26,8 @@ function Start() {
 
   return (
     <>
-      <SideBar isOpen={isOpen} toggle={updateIsOpen} />
-      <NavBar toggle={updateIsOpen} />
+      <SideBar isOpen={isOpen} toggle={updateIsOpen} isLogin={false} />
+      <NavBar toggle={updateIsOpen} isLogin={false} />
       <Switch>
         <Route exact path="/" />
         <Route

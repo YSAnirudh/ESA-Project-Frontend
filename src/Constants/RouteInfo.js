@@ -4,3 +4,5 @@ export const account = '/account';
 export const payment = '/payment';
 export const homeRide = '/home/ride';
 export const homeRiding = '/home/riding';
+export const login = '/login';
+export const signup = '/signup';

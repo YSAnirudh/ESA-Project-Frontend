@@ -9,11 +9,36 @@ import {
   SideBarRoute,
   SideBarWrapper,
 } from './SideElem';
-import {homeStart, history, account} from '../../Constants/RouteInfo';
+import {
+  homeStart,
+  history,
+  account,
+  login,
+  signup,
+} from '../../Constants/RouteInfo';
 
-const SideBar = ({isOpen, toggle}) => {
-  return (
-    <>
+const SideBar = ({isOpen, toggle, isLogin}) => {
+  function WhichPage(props) {
+    const IsLogin = props.IsLogin;
+    if (IsLogin) {
+      return (
+        <SideBarContainer isOpen={isOpen} onClick={toggle}>
+          <Icon onClick={toggle}>
+            <CloseIcon />
+          </Icon>
+          <SideBarWrapper>
+            <SideBarBtnWrap>
+              <SideBarRoute to={login}>Login</SideBarRoute>
+            </SideBarBtnWrap>
+
+            <SideBarBtnWrap>
+              <SideBarRoute to={signup}>SignUp</SideBarRoute>
+            </SideBarBtnWrap>
+          </SideBarWrapper>
+        </SideBarContainer>
+      );
+    }
+    return (
       <SideBarContainer isOpen={isOpen} onClick={toggle}>
         <Icon onClick={toggle}>
           <CloseIcon />
@@ -35,8 +60,10 @@ const SideBar = ({isOpen, toggle}) => {
           </SideBarBtnWrap>
         </SideBarWrapper>
       </SideBarContainer>
-    </>
-  );
+    );
+  }
+
+  return <WhichPage IsLogin={isLogin} />;
 };
 
 export default SideBar;
