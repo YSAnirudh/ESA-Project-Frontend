@@ -17,11 +17,42 @@ import {FaMapMarked} from 'react-icons/fa';
 //   ButtonWrapper as MapButtonWrapper,
 // } from '../../Components/MapElem';
 // import {IoIosArrowDown} from 'react-icons/io';
-const HomeStart = ({isMapVisible, toggleMap}) => {
+const HomeStart = ({
+  isMapVisible,
+  toggleMap,
+  toggleHomeStart,
+  toggleHomeRide,
+}) => {
   const [isTextActive, setIsTextActive] = useState(false);
 
   const toggleTextActive = () => {
     setIsTextActive(!isTextActive);
+  };
+  const locations = ['Hello', 'Hi'];
+
+  const [suggestions, setSuggestions] = useState([]);
+
+  const onTextChange = (e) => {
+    let suggestions = [];
+    const value = e.target.value;
+    if (value.length > 0) {
+      const regex = new RegExp(`${value}`);
+      suggestions = locations.sort().filter((v) => regex.test(v));
+    }
+    setSuggestions(suggestions);
+  };
+
+  const showSuggestions = () => {
+    if (suggestions.length === 0) {
+      return <></>;
+    }
+    return (
+      <ul>
+        {suggestions.map((loc) => (
+          <li>{loc}</li>
+        ))}
+      </ul>
+    );
   };
 
   return (
@@ -34,8 +65,9 @@ const HomeStart = ({isMapVisible, toggleMap}) => {
           <TextInput
             id="start"
             placeholder="Start Point"
-            onChange={() => toggleTextActive()}
+            onChange={(e) => onTextChange(e)}
           />
+          {showSuggestions()}
           <MapIcon>
             <FaMapMarked size={17} onClick={() => toggleMap()} />
           </MapIcon>
@@ -47,7 +79,7 @@ const HomeStart = ({isMapVisible, toggleMap}) => {
             <FaMapMarked size={17} onClick={toggleMap} />
           </MapIcon>
         </TextInputContainer> */}
-        <ButtonWrapper>
+        <ButtonWrapper onClick={() => toggleHomeStart()}>
           <ButtonRoute to={homeRide}>Get Started</ButtonRoute>
         </ButtonWrapper>
       </DetailsContainer>

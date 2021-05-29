@@ -1,12 +1,10 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Form, Row, Col, Button} from 'react-bootstrap';
+import logo from '../Assets/DL.png';
 
-function Account() {
-  return (
-    <>
-      <h1>Account</h1>
-      <button onClick={() => {}}>Hello</button>
-    </>
-  );
+function Account(props) {
+  return <></>;
 }
 
 export default Account;

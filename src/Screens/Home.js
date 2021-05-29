@@ -7,14 +7,20 @@ import HomeStart from './HomeComponents/HomeStart';
 import HomeRide from './HomeComponents/HomeRide';
 import {MapElements} from '../Components/MapElem';
 
-function Home({path}) {
+function Home({
+  path,
+  isHomeStart,
+  isHomeRide,
+  toggleHomeStart,
+  toggleHomeRide,
+}) {
   const [isMapOpen, setIsMapOpen] = useState(false);
 
   const toggle = () => {
     setIsMapOpen(!isMapOpen);
   };
 
-  if (String.prototype.valueOf(path) === String.prototype.valueOf(homeStart)) {
+  if (isHomeStart && isHomeRide) {
     return (
       <PageContainer>
         {isMapOpen ? (
@@ -22,12 +28,17 @@ function Home({path}) {
         ) : (
           <>
             <BackVid />
-            <HomeStart isMapVisible={isMapOpen} toggleMap={toggle} />
+            <HomeStart
+              isMapVisible={isMapOpen}
+              toggleMap={toggle}
+              toggleHomeStart={toggleHomeStart}
+              toggleHomeRide={toggleHomeRide}
+            />
           </>
         )}
       </PageContainer>
     );
-  } else if (path === homeRide) {
+  } else if (!isHomeStart && isHomeRide) {
     console.log('noob');
     return (
       <>
