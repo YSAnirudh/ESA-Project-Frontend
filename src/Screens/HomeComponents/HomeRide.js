@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
-import {homeRide, homeStart, payment} from '../../Constants/RouteInfo';
+import {
+  homeRide,
+  homeRiding,
+  homeStart,
+  payment,
+} from '../../Constants/RouteInfo';
 import {
   BackButtonWrapper,
   ButtonRoute,
@@ -8,9 +13,8 @@ import {
   TextContainer,
 } from '../Elements/HomeElem';
 
-const HomeRide = () => {
+const HomeRide = ({toggleHomeStart, toggleHomeRide}) => {
   const [isRiding, setIsRiding] = useState(false);
-
   const toggleRiding = () => {
     setIsRiding(!isRiding);
   };
@@ -38,14 +42,7 @@ const HomeRide = () => {
       return (
         <>
           <ButtonWrapper colorChange="green">
-            <ButtonRoute
-              to={homeRide}
-              onClick={() => {
-                toggleRiding();
-              }}
-            >
-              Start Ride
-            </ButtonRoute>
+            <ButtonRoute to={homeRiding}>Start Ride</ButtonRoute>
           </ButtonWrapper>
           <BackButtonWrapper>
             <ButtonRoute to={homeStart} mobFontSize="14px" fontSize="10px">
@@ -61,10 +58,15 @@ const HomeRide = () => {
     <DetailsContainer>
       <TextContainer>Your Ride</TextContainer>
       <TextContainer>From:</TextContainer>
-      <TextContainer>To:</TextContainer>
-      <TextContainer>Estimated Duration:x min</TextContainer>
-      <TextContainer>Estimated Cost:Rs.y</TextContainer>
-      <Buttons />
+      <TextContainer>Cost:Rs.y/1hr</TextContainer>
+      <ButtonWrapper colorChange="green">
+        <ButtonRoute to={homeRiding}>Start Ride</ButtonRoute>
+      </ButtonWrapper>
+      <BackButtonWrapper>
+        <ButtonRoute to={homeStart} mobFontSize="14px" fontSize="10px">
+          Go Back
+        </ButtonRoute>
+      </BackButtonWrapper>
       {/* <ButtonWrapper>
         <ButtonRoute
           to={payment}

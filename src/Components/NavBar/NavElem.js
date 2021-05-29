@@ -66,7 +66,7 @@ export const NavMenu = styled.ul`
 `;
 
 export const NavItem = styled.li`
-  height: 60px;
+  height: 66px;
 `;
 
 export const NavLinks = styled(NavLink)`

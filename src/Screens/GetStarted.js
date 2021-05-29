@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import '../App.css';
-import {Route, Switch} from 'react-router-dom';
-import Home from './Home';
+import {Route, Switch, Redirect, useHistory} from 'react-router-dom';
 import History from './History';
 import Account from './Account';
 import Balance from './Balance';
@@ -16,32 +15,17 @@ import {
   payment,
   homeRiding,
   homeAfterLogin,
+  login,
 } from '../Constants/RouteInfo';
+import {PageContainer} from './Elements/HomeElem';
+import Maps from '../Components/Map';
+import BackVid from '../Components/BackVideo';
 import Payment from './Payment';
+import HomeStart from './HomeComponents/HomeStart';
+import HomeRide from './HomeComponents/HomeRide';
+import HomeRiding from './HomeComponents/HomeRiding';
 
-function Start() {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const updateIsOpen = () => {
-    setIsOpen(!isOpen);
-  };
-
-  const [isHomeStart, setIsHomeStart] = useState(true);
-
-  const toggleHomeStart = () => {
-    setIsHomeStart(!isHomeStart);
-  };
-
-  const [isHomeRide, setIsHomeRide] = useState(true);
-
-  const toggleHomeRide = () => {
-    setIsHomeRide(!isHomeRide);
-  };
-
-  const setToTrueHomeStart = () => {
-    setIsHomeStart(true);
-  };
-
+function Start({isOpen, updateIsOpen, isLogin}) {
   const bookinghist = [
     {
       name: 'Ride-1',
@@ -82,51 +66,58 @@ function Start() {
     username: 'raghus',
     phnumber: '7995948888',
   };
+  const [isMapOpen, setIsMapOpen] = useState(false);
 
+  const toggle = () => {
+    setIsMapOpen(!isMapOpen);
+  };
   return (
     <>
       <SideBar isOpen={isOpen} toggle={updateIsOpen} isLogin={false} />
-      <NavBar
-        toggle={updateIsOpen}
-        isLogin={false}
-        setHomeStart={setToTrueHomeStart}
-      />
+      <NavBar toggle={updateIsOpen} isLogin={isLogin} />
       <Switch>
         <Route exact path={homeAfterLogin} />
         <Route
           exact
+          path={login}
+          render={() => {
+            return <Redirect to={homeAfterLogin} />;
+          }}
+        />
+        <Route
+          exact
           path={homeStart}
           component={() => (
-            <Home
-              isHomeRide={isHomeRide}
-              isHomeStart={isHomeStart}
-              toggleHomeRide={toggleHomeRide}
-              toggleHomeStart={toggleHomeStart}
-            />
+            <PageContainer>
+              {isMapOpen ? (
+                <Maps isMapVisible={isMapOpen} toggleMap={toggle} />
+              ) : (
+                <>
+                  <BackVid />
+                  <HomeStart isMapVisible={isMapOpen} toggleMap={toggle} />
+                </>
+              )}
+            </PageContainer>
           )}
         />
         <Route
           exact
           path={homeRide}
           component={() => (
-            <Home
-              isHomeRide={isHomeRide}
-              isHomeStart={isHomeStart}
-              toggleHomeRide={toggleHomeRide}
-              toggleHomeStart={toggleHomeStart}
-            />
+            <PageContainer>
+              <BackVid />
+              <HomeRide />
+            </PageContainer>
           )}
         />
         <Route
           exact
           path={homeRiding}
           component={() => (
-            <Home
-              isHomeRide={isHomeRide}
-              isHomeStart={isHomeStart}
-              toggleHomeRide={toggleHomeRide}
-              toggleHomeStart={toggleHomeStart}
-            />
+            <PageContainer>
+              <BackVid />
+              <HomeRiding />
+            </PageContainer>
           )}
         />
         <Route

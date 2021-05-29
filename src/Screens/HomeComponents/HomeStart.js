@@ -9,6 +9,7 @@ import {
   TextInput,
   TextInputContainer,
   MapIcon,
+  SuggestionsList,
 } from '../Elements/HomeElem';
 import {FaMapMarked} from 'react-icons/fa';
 // import Maps from '../../Components/Map';
@@ -17,41 +18,54 @@ import {FaMapMarked} from 'react-icons/fa';
 //   ButtonWrapper as MapButtonWrapper,
 // } from '../../Components/MapElem';
 // import {IoIosArrowDown} from 'react-icons/io';
-const HomeStart = ({
-  isMapVisible,
-  toggleMap,
-  toggleHomeStart,
-  toggleHomeRide,
-}) => {
+const HomeStart = ({isMapVisible, toggleMap}) => {
   const [isTextActive, setIsTextActive] = useState(false);
 
   const toggleTextActive = () => {
     setIsTextActive(!isTextActive);
   };
-  const locations = ['Hello', 'Hi'];
+  const locations = ['Hello', 'Hi', 'how', 'hell', 'hoob'];
 
   const [suggestions, setSuggestions] = useState([]);
-
+  const [text, setText] = useState('');
   const onTextChange = (e) => {
     let suggestions = [];
     const value = e.target.value;
     if (value.length > 0) {
-      const regex = new RegExp(`${value}`);
-      suggestions = locations.sort().filter((v) => regex.test(v));
+      const regex = new RegExp(`${value.toLowerCase()}`);
+      suggestions = locations.sort().filter((v) => regex.test(v.toLowerCase()));
+    } else if (value.length === 0) {
+      //suggestions = locations;
     }
     setSuggestions(suggestions);
+    setText(value);
   };
 
+  const suggestionSelected = (value) => {
+    setText(value);
+    setSuggestions([]);
+  };
+
+  const showLocations = (e) => {
+    const value = e.target.value;
+    if (value.length === 0) {
+      <SuggestionsList>
+        {locations.map((loc) => (
+          <li>{loc}</li>
+        ))}
+      </SuggestionsList>;
+    }
+  };
   const showSuggestions = () => {
     if (suggestions.length === 0) {
       return <></>;
     }
     return (
-      <ul>
+      <SuggestionsList>
         {suggestions.map((loc) => (
-          <li>{loc}</li>
+          <li onClick={() => suggestionSelected(loc)}>{loc}</li>
         ))}
-      </ul>
+      </SuggestionsList>
     );
   };
 
@@ -65,13 +79,17 @@ const HomeStart = ({
           <TextInput
             id="start"
             placeholder="Start Point"
-            onChange={(e) => onTextChange(e)}
+            value={text}
+            onChange={(e) => {
+              onTextChange(e);
+            }}
           />
-          {showSuggestions()}
+
           <MapIcon>
             <FaMapMarked size={17} onClick={() => toggleMap()} />
           </MapIcon>
         </TextInputContainer>
+        {showSuggestions()}
         {/* <TextInputContainer>
           <ButtonText>End</ButtonText>
           <TextInput id="end" placeholder="Destination" />
@@ -79,7 +97,7 @@ const HomeStart = ({
             <FaMapMarked size={17} onClick={toggleMap} />
           </MapIcon>
         </TextInputContainer> */}
-        <ButtonWrapper onClick={() => toggleHomeStart()}>
+        <ButtonWrapper>
           <ButtonRoute to={homeRide}>Get Started</ButtonRoute>
         </ButtonWrapper>
       </DetailsContainer>

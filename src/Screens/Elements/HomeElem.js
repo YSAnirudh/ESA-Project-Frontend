@@ -10,6 +10,36 @@ export const PageContainer = styled.div`
   box-sizing: border-box;
 `;
 
+export const SuggestionsList = styled.ul`
+  display: flex;
+  flex-direction: column;
+  width: 95%;
+  margin-top: -4px;
+  background-color: #ccc;
+  border-radius: 5px;
+  max-height: 100px;
+  overflow: auto;
+  ::-webkit-scrollbar {
+    border-radius: 5px;
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 5px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #666;
+  }
+`;
+
 export const DetailsContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -56,7 +86,7 @@ export const TextContainer = styled.text`
   font-family: Arial, Helvetica, sans-serif;
   margin-top: -2vh;
   margin-bottom: 2vh;
-  font-size: ${(props) => props.fontSize || '1.2rem'};
+  font-size: ${(props) => props.fontSize || '1.3rem'};
   @media screen and (max-width: 650px) {
     font-size: ${(props) => props.mobFontSize || '1.7rem'};
   }
@@ -68,17 +98,14 @@ export const MapIcon = styled.div`
   cursor: pointer;
 `;
 
-export const TextInput = styled.input.attrs((props) => ({
-  type: 'text',
-  size: props.size || '4px',
-}))`
+export const TextInput = styled.input`
   width: 95%;
   box-sizing: border-box;
-  border: 0;
+  border: none;
   font-weight: lighter;
-  color: grey;
+  color: black;
   font-family: Arial, Helvetica, sans-serif;
-  margin-left: 10px;
+  /* margin-left: 10px; */
   background-color: #ccc;
   &:focus {
     outline: 0;

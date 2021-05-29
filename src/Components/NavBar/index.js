@@ -56,9 +56,7 @@ function NavBar({toggle, isLogin, setHomeStart}) {
           </MobileIcon>
           <NavMenu>
             <NavItem>
-              <NavLinks to={homeStart} onClick={setHomeStart}>
-                Home
-              </NavLinks>
+              <NavLinks to={homeStart}>Home</NavLinks>
             </NavItem>
             <NavItem>
               <NavLinks to={history}>History</NavLinks>

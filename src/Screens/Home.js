@@ -20,7 +20,7 @@ function Home({
     setIsMapOpen(!isMapOpen);
   };
 
-  if (isHomeStart && isHomeRide) {
+  if (isHomeStart && !isHomeRide) {
     return (
       <PageContainer>
         {isMapOpen ? (
@@ -44,7 +44,10 @@ function Home({
       <>
         <PageContainer>
           <BackVid />
-          {/* <Map /> */}
+          <HomeRide
+            toggleHomeStart={toggleHomeStart}
+            toggleHomeRide={toggleHomeRide}
+          />
         </PageContainer>
       </>
     );
