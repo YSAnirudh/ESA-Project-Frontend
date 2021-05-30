@@ -4,6 +4,7 @@ import {Route, Switch, Redirect, useHistory} from 'react-router-dom';
 import History from './History';
 import Account from './Account';
 import Balance from './Balance';
+import EditAccount from './EditAccount';
 import Error from './Error';
 import NavBar from '../Components/NavBar';
 import SideBar from '../Components/SideBar';
@@ -16,6 +17,8 @@ import {
   homeRiding,
   homeAfterLogin,
   login,
+  accountBalance,
+  editProfile,
 } from '../Constants/RouteInfo';
 import {PageContainer} from './Elements/HomeElem';
 import Maps from '../Components/Map';
@@ -123,13 +126,24 @@ function Start({isOpen, updateIsOpen, isLogin}) {
         <Route
           exact
           path={history}
-          component={() => <History info={bookinghist} />}
+          component={() => (
+            <>
+              <History info={bookinghist} />
+            </>
+          )}
         />
         <Route
           exact
           path={account}
           component={() => <Account info={profiledata} />}
         />
+        <Route
+          exact
+          path={editProfile}
+          component={() => <EditAccount info={profiledata} />}
+        />
+
+        <Route exact path={accountBalance} component={() => <Balance />} />
         <Route exact path={payment} component={() => <Payment />} />
         <Route component={Error} />
       </Switch>

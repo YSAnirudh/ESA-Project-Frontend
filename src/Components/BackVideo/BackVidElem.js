@@ -7,8 +7,8 @@ export const BackVidContainer = styled.div`
   align-items: center;
   padding: 0 30px;
   height: 100px;
-  position: relative;
-  z-index: 1; */
+  position: relative;*/
+  z-index: 0;
 `;
 
 export const BackVidBG = styled.div`

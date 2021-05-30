@@ -101,8 +101,6 @@ const HomeStart = ({isMapVisible, toggleMap}) => {
           <ButtonRoute to={homeRide}>Get Started</ButtonRoute>
         </ButtonWrapper>
       </DetailsContainer>
-      {/* </>
-      )} */}
     </>
   );
 };

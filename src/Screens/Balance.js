@@ -3,7 +3,7 @@ import {useState} from 'react';
 import {BalancePopup} from './BalancePopup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export const Balance = () => {
+function Balance() {
   const [balance, setbalance] = useState(0);
   const [buttonpopup, setbuttonpopup] = useState(false);
   const [addmoney, setaddmoney] = useState('');
@@ -32,7 +32,7 @@ export const Balance = () => {
       <div class="card w-75 container my-5">
         <div class="card-body">
           <h5 class="card-title">Balance Money : {balance}</h5>
-          <p class="card-text">These are your virtual money.</p>
+          <p class="card-text">This is your virtual money.</p>
           <a
             href="#"
             class="btn btn-primary"
@@ -64,4 +64,6 @@ export const Balance = () => {
       </div>
     </div>
   );
-};
+}
+
+export default Balance;

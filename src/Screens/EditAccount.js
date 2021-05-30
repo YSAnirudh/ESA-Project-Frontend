@@ -3,9 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import {useState} from 'react';
 import '../CSS/Profile.css';
+import {ButtonWrapper} from './Elements/AccountElem';
 import logo from '../Assets/DL.png';
-
-export default function EditAccount() {
+import '../CSS/Account.css';
+export default function EditAccount(props) {
   const [location, setlocation] = useState('');
   const [email, setemail] = useState(props.info.email);
   const [username, setusername] = useState(props.info.username);
@@ -30,68 +31,71 @@ export default function EditAccount() {
   };
 
   return (
-    <div className="form">
+    <div className="form" style={{backgroundColor: 'white'}}>
       <div className="container">
-        <div className="d-flex justify-content-center mb-2">
-          <h1 className="account">Account</h1>
-        </div>
-        <div className="border-start border-5">
-          <Form className="ms-4">
-            <Form.Group
-              as={Row}
-              className="my-3"
-              controlId="formHorizontalEmail"
-            >
-              <Form.Label column sm={2}>
-                Email
-              </Form.Label>
-              <Col sm={3}>
-                <Form.Control
-                  type="email"
-                  placeholder="Email"
-                  value={email}
-                  onChange={emailChange}
-                />
-              </Col>
-            </Form.Group>
+        <div style={{marginTop: 50}}>
+          <div className="d-flex justify-content-center mb-2">
+            <h1 className="account">Edit Account</h1>
+          </div>
+          <div className="border-bottom border-danger border-3 mb-3"></div>
+          <div style={{marginLeft: -10}}>
+            <div className="border-start border-5">
+              <Form className="ms-4">
+                <Form.Group
+                  as={Row}
+                  className="my-3"
+                  controlId="formHorizontalEmail"
+                >
+                  <Form.Label column sm={2}>
+                    Email
+                  </Form.Label>
+                  <Col>
+                    <Form.Control
+                      type="email"
+                      placeholder="Email"
+                      value={email}
+                      onChange={emailChange}
+                    />
+                  </Col>
+                </Form.Group>
 
-            <Form.Group
-              as={Row}
-              className="my-3"
-              controlId="formHorizontalPassword"
-            >
-              <Form.Label column sm={2}>
-                UserName
-              </Form.Label>
-              <Col sm={3}>
-                <Form.Control
-                  type="text"
-                  placeholder="Username"
-                  value={username}
-                  onChange={usernameChange}
-                />
-              </Col>
-            </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="my-3"
+                  controlId="formHorizontalPassword"
+                >
+                  <Form.Label column sm={2}>
+                    UserName
+                  </Form.Label>
+                  <Col>
+                    <Form.Control
+                      type="text"
+                      placeholder="Username"
+                      value={username}
+                      onChange={usernameChange}
+                    />
+                  </Col>
+                </Form.Group>
 
-            <Form.Group
-              as={Row}
-              className="my-3"
-              controlId="formHorizontalPassword"
-            >
-              <Form.Label column sm={2}>
-                Phone No
-              </Form.Label>
-              <Col sm={3}>
-                <Form.Control
-                  type="text"
-                  placeholder="Phone Number"
-                  value={phnumber}
-                  onChange={phnumberChange}
-                />
-              </Col>
-            </Form.Group>
+                <Form.Group
+                  as={Row}
+                  className="my-3"
+                  controlId="formHorizontalPassword"
+                >
+                  <Form.Label column sm={2}>
+                    Phone No
+                  </Form.Label>
+                  <Col>
+                    <Form.Control
+                      type="text"
+                      placeholder="Phone Number"
+                      value={phnumber}
+                      onChange={phnumberChange}
+                    />
+                  </Col>
+                </Form.Group>
 
-            {/* <div>
+                {/* <div>
               <Form.Label
                 column
                 sm={2}
@@ -103,7 +107,7 @@ export default function EditAccount() {
               <img src={logo} class="img-thumbnail" alt="..." />
             </div> */}
 
-            {/* <div>
+                {/* <div>
               <Form.Label
                 column
                 sm={2}
@@ -124,12 +128,24 @@ export default function EditAccount() {
               </Form.Control>
             </div> */}
 
-            <Form.Group as={Row} className="my-3">
-              <Col sm={{span: 10, offset: 2}}>
-                <Button type="submit">Save Changes</Button>
-              </Col>
-            </Form.Group>
-          </Form>
+                <Form.Group as={Row} className="my-3">
+                  <div
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <ButtonWrapper>
+                      <Button type="submit" className="mybutton">
+                        Save Changes
+                      </Button>
+                    </ButtonWrapper>
+                  </div>
+                </Form.Group>
+              </Form>
+            </div>
+          </div>
         </div>
       </div>
     </div>
