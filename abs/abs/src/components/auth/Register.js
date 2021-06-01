@@ -10,11 +10,12 @@ class Register extends Component {
   constructor() {
     super();
     this.state = {
-      name: "",
-      phonenumber:"",
+      username: "",
+      phoneNo:"",
       email: "",
       password: "",
       password2: "",
+      licenseNo : "",
       errors: {}
     };
   }
@@ -45,11 +46,13 @@ class Register extends Component {
     e.preventDefault();
 
     const newUser = {
-      name: this.state.name,
-      phonenumber:this.state.phonenumber,
+      username: this.state.username,
       email: this.state.email,
       password: this.state.password,
-      password2: this.state.password2
+      phoneNo:this.state.phoneNo,
+      licenseNo:this.state.licenseNo
+      
+    
     };
 
     this.props.registerUser(newUser, this.props.history);
@@ -85,30 +88,44 @@ class Register extends Component {
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.name}
-                  error={errors.name}
-                  id="name"
+                  value={this.state.username}
+                  error={errors.username}
+                  id="username"
                   type="text"
                   className={classnames("", {
-                    invalid: errors.name
+                    invalid: errors.username
                   })}
                 />
                 <label htmlFor="name">Name</label>
-                <span className="red-text">{errors.name}</span>
+                <span className="red-text">{errors.username}</span>
               </div>
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.phonenumber}
-                  error={errors.phonenumber}
-                  id="phonenumber"
+                  value={this.state.phoneNo}
+                  error={errors.phoneNo}
+                  id="phoneNo"
                   type="tel"
                   className={classnames("", {
-                    invalid: errors.phonenumber
+                    invalid: errors.phoneNo
                   })}
                 />
-                <label htmlFor="phonenumber">Phonenumber</label>
-                <span className="red-text">{errors.phonenumber}</span>
+                <label htmlFor="phoneNo">Phonenumber</label>
+                <span className="red-text">{errors.phoneNo}</span>
+              </div>
+              <div className="input-field col s12">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.licenseNo}
+                  error={errors.licenseNo}
+                  id="licenseNo"
+                  type="tel"
+                  className={classnames("", {
+                    invalid: errors.licenseNo
+                  })}
+                />
+                <label htmlFor="licenseNo">licenseNumber</label>
+                <span className="red-text">{errors.licenseNo}</span>
               </div>
               <div className="input-field col s12">
                 <input

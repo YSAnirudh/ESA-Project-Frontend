@@ -9,7 +9,7 @@ class Login extends Component {
   constructor() {
     super();
     this.state = {
-      phonenumber: "",
+      phoneNo: "",
       password: "",
       errors: {}
     };
@@ -42,7 +42,7 @@ class Login extends Component {
     e.preventDefault();
 
     const userData = {
-      phonenumber: this.state.phonenumber,
+      phoneNo: this.state.phoneNo,
       password: this.state.password
     };
 
@@ -73,18 +73,18 @@ class Login extends Component {
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.phonenumber}
-                  error={errors.phonenumber}
-                  id="phonenumber"
+                  value={this.state.phoneNo}
+                  error={errors.phoneNo}
+                  id="phoneNo"
                   type="tel"
                   className={classnames("", {
-                    invalid: errors.phonenumber || errors.phonenumbernotfound
+                    invalid: errors.phoneNo || errors.phoneNonotfound
                   })}
                 />
-                <label htmlFor="phonenumber">phonenumber</label>
+                <label htmlFor="phoneNo">phoneNumber</label>
                 <span className="red-text">
-                  {errors.phonenumber}
-                  {errors.phonenumbernotfound}
+                  {errors.phoneNo}
+                  {errors.phoneNonotfound}
                 </span>
               </div>
               <div className="input-field col s12">
