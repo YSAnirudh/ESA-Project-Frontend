@@ -36,7 +36,6 @@ export const ButtonWrapper = styled.div`
 `;
 
 export const ButtonRoute = styled(NavLink)`
-  cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
   font-size: ${(props) => props.fontSize || '16px'};
@@ -45,6 +44,28 @@ export const ButtonRoute = styled(NavLink)`
   color: black;
   font-family: Arial, Helvetica, sans-serif;
   padding: 0 3px 0 3px;
+  @media screen and (max-width: 650px) {
+    font-size: ${(props) => props.mobFontSize || '20px'};
+  }
+`;
+
+export const Button = styled.button`
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+  font-size: ${(props) => props.fontSize || '12px'};
+  background-color: ${(props) => props.colorChange || '#01bf71'};
+  border: 0;
+  border-radius: 5px;
+  font-weight: lighter;
+  color: black;
+  font-family: Arial, Helvetica, sans-serif;
+  /* padding: 0 2px 0 2px; */
+  margin-left: 10px;
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background-color: #f5f5f5;
+  }
   @media screen and (max-width: 650px) {
     font-size: ${(props) => props.mobFontSize || '20px'};
   }

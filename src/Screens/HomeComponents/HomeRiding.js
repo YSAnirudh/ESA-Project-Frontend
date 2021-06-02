@@ -1,5 +1,5 @@
-import React from 'react';
-import {homeRide, homeStart} from '../../Constants/RouteInfo';
+import React, {useState} from 'react';
+import {homeRide, homeRiding, homeStart} from '../../Constants/RouteInfo';
 import {
   BackButtonWrapper,
   ButtonRoute,
@@ -7,14 +7,28 @@ import {
   DetailsContainer,
   TextContainer,
 } from '../Elements/HomeElem';
+import Timer from './Timer';
 
-const HomeRiding = () => {
+const HomeRiding = ({location}) => {
+  const [isActive, setIsActive] = useState(true);
+
   const stopRideOnlyIfNear = () => {
     if (true) {
       return (
-        <ButtonWrapper colorChange="red">
-          <ButtonRoute to={homeRide}>Stop Ride</ButtonRoute>
-        </ButtonWrapper>
+        <>
+          <TextContainer>Riding from: {location[0]}</TextContainer>
+          <Timer isActive={isActive} setIsActive={setIsActive} />
+          <ButtonWrapper colorChange="red">
+            <ButtonRoute
+              to={homeRiding}
+              onClick={() => {
+                setIsActive(!isActive);
+              }}
+            >
+              Stop Ride
+            </ButtonRoute>
+          </ButtonWrapper>
+        </>
       );
     } else {
       return (

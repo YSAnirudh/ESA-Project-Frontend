@@ -7,7 +7,7 @@ import {homeAfterLogin} from './Constants/RouteInfo';
 import NavBar from './Components/NavBar';
 import SideBar from './Components/SideBar';
 function App(props) {
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(false);
 
   const updateisLogin = () => {
     setIsLogin(!isLogin);

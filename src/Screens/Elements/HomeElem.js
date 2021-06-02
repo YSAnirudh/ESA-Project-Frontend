@@ -111,6 +111,14 @@ export const TextInput = styled.input`
     outline: 0;
     /* border: 1px solid red; */
   }
+  ::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  ::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 `;
 
 export const ButtonText = styled.text`
@@ -137,7 +145,7 @@ export const ButtonWrapper = styled.div`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;
-  margin-top: 20px;
+  margin-top: 10px;
 
   &:hover {
     transition: all 0.2s ease-in-out;
@@ -181,6 +189,29 @@ export const Button = styled.button`
   }
 `;
 
+export const ButtonBack = styled.button`
+  cursor: pointer;
+  font-size: ${(props) => props.fontSize || '10px'};
+  border: 0;
+  font-weight: lighter;
+  color: blue;
+  background: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin: 5px 0 0 0;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: underline;
+  @media screen and (max-width: 650px) {
+    font-size: ${(props) => props.mobFontSize || '16px'};
+  }
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #ccc;
+  }
+`;
+
 export const BackButtonWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -190,7 +221,7 @@ export const BackButtonWrapper = styled.div`
   border-radius: 5px;
   box-sizing: border-box;
   padding: 5px 0 5px 0;
-  margin: 5px 0 3px 0;
+  margin: 5px 0 0 0;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   text-decoration: none;

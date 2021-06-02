@@ -11,3 +11,5 @@ export const register = '/register';
 export const dashboard = '/dashboard';
 export const editProfile = '/account/edit';
 export const accountBalance = '/account/balance';
+
+export const backendEndpoint = 'https://jeldi.herokuapp.com/';

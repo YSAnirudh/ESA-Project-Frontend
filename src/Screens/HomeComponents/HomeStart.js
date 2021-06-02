@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {homeRide} from '../../Constants/RouteInfo';
+import {homeRide, homeStart} from '../../Constants/RouteInfo';
 import {
   ButtonRoute,
   ButtonText,
@@ -18,44 +18,41 @@ import {FaMapMarked} from 'react-icons/fa';
 //   ButtonWrapper as MapButtonWrapper,
 // } from '../../Components/MapElem';
 // import {IoIosArrowDown} from 'react-icons/io';
-const HomeStart = ({isMapVisible, toggleMap}) => {
-  const [isTextActive, setIsTextActive] = useState(false);
-
-  const toggleTextActive = () => {
-    setIsTextActive(!isTextActive);
-  };
-  const locations = ['Hello', 'Hi', 'how', 'hell', 'hoob'];
-
+const HomeStart = ({
+  isMapVisible,
+  toggleMap,
+  locations,
+  setLocation,
+  location,
+}) => {
+  const [locat, setLocat] = useState(location);
+  // const locations = ['Hello', 'Hi', 'how', 'hell', 'hoob'];
+  // console.log(location);
   const [suggestions, setSuggestions] = useState([]);
-  const [text, setText] = useState('');
+  const [text, setText] = useState(locat[0] != '' ? locat[0] : '');
+
   const onTextChange = (e) => {
     let suggestions = [];
     const value = e.target.value;
     if (value.length > 0) {
       const regex = new RegExp(`${value.toLowerCase()}`);
-      suggestions = locations.sort().filter((v) => regex.test(v.toLowerCase()));
+      suggestions = locations
+        .sort()
+        .filter((v) => regex.test(v[0].toLowerCase()));
     } else if (value.length === 0) {
       //suggestions = locations;
     }
+
     setSuggestions(suggestions);
     setText(value);
   };
 
   const suggestionSelected = (value) => {
-    setText(value);
+    setLocat(value);
+    setText(value[0]);
     setSuggestions([]);
   };
 
-  const showLocations = (e) => {
-    const value = e.target.value;
-    if (value.length === 0) {
-      <SuggestionsList>
-        {locations.map((loc) => (
-          <li>{loc}</li>
-        ))}
-      </SuggestionsList>;
-    }
-  };
   const showSuggestions = () => {
     if (suggestions.length === 0) {
       return <></>;
@@ -63,7 +60,7 @@ const HomeStart = ({isMapVisible, toggleMap}) => {
     return (
       <SuggestionsList>
         {suggestions.map((loc) => (
-          <li onClick={() => suggestionSelected(loc)}>{loc}</li>
+          <li onClick={() => suggestionSelected(loc)}>{loc[0]}</li>
         ))}
       </SuggestionsList>
     );
@@ -86,7 +83,13 @@ const HomeStart = ({isMapVisible, toggleMap}) => {
           />
 
           <MapIcon>
-            <FaMapMarked size={17} onClick={() => toggleMap()} />
+            <FaMapMarked
+              size={17}
+              onClick={() => {
+                setLocation(locat);
+                toggleMap();
+              }}
+            />
           </MapIcon>
         </TextInputContainer>
         {showSuggestions()}
@@ -98,7 +101,14 @@ const HomeStart = ({isMapVisible, toggleMap}) => {
           </MapIcon>
         </TextInputContainer> */}
         <ButtonWrapper>
-          <ButtonRoute to={homeRide}>Get Started</ButtonRoute>
+          {text != '' &&
+          locations.find(
+            (elem) => elem[0].toLowerCase() == text.toLowerCase()
+          ) ? (
+            <ButtonRoute to={homeRide}>Get Started</ButtonRoute>
+          ) : (
+            <ButtonRoute to={homeStart}>Get Started</ButtonRoute>
+          )}
         </ButtonWrapper>
       </DetailsContainer>
     </>
