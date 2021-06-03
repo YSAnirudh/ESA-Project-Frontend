@@ -13,16 +13,16 @@ function History(props) {
             <div className="card-body">
               <table className="table">
                 <tr>
-                  <th>start point </th>
+                  <th>Start point </th>
                   <th>Destination point</th>
                   <th>Duration</th>
                   <th>Fare</th>
                 </tr>
                 <tr>
-                  <td>{item.startpoint}</td>
-                  <td>{item.destination}</td>
+                  <td>{item.startLocation}</td>
+                  <td>{item.endLocation}</td>
                   <td>{item.duration}</td>
-                  <td>{item.fare}</td>
+                  <td>{item.price}</td>
                 </tr>
               </table>
             </div>

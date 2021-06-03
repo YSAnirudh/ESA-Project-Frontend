@@ -92,7 +92,6 @@ function Start({isOpen, updateIsOpen, isLogin}) {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log(res);
         setProfileData(res);
       })
       .catch((err) => console.log(err));
@@ -116,13 +115,27 @@ function Start({isOpen, updateIsOpen, isLogin}) {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log(res.balance);
         setBalance(res.balance);
       })
       .catch((err) => console.log(err));
   };
   const setBal = (bal) => {
     setBalance(bal);
+  };
+
+  const [bookingHistory, setBookingHistory] = useState([]);
+  const handleGetHistory = () => {
+    fetch('http://localhost:5000/details/history', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({userId: '95ff6bf5-a85b-4260-a503-ce983195ed93'}),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res);
+        setBookingHistory(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   const [userLoc, setUserLoc] = useState(userLoc);
@@ -162,6 +175,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
     getLocation();
     handleGetProfileData();
     handleGetBalance();
+    handleGetHistory();
   }, []);
 
   const [location, setLocation] = useState(['', [0, 0]]);
@@ -238,7 +252,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
           path={history}
           component={() => (
             <>
-              <History info={bookinghist} />
+              <History info={bookingHistory} />
             </>
           )}
         />
