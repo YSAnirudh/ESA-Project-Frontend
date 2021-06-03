@@ -10,6 +10,7 @@ import {
   TextInputContainer,
   MapIcon,
   SuggestionsList,
+  SuggestionsItem,
 } from '../Elements/HomeElem';
 import {FaMapMarked} from 'react-icons/fa';
 // import Maps from '../../Components/Map';
@@ -24,10 +25,9 @@ const HomeStart = ({
   locations,
   setLocation,
   location,
+  nearestLocation,
 }) => {
   const [locat, setLocat] = useState(location);
-  // const locations = ['Hello', 'Hi', 'how', 'hell', 'hoob'];
-  // console.log(location);
   const [suggestions, setSuggestions] = useState([]);
   const [text, setText] = useState(locat[0] != '' ? locat[0] : '');
 
@@ -60,7 +60,9 @@ const HomeStart = ({
     return (
       <SuggestionsList>
         {suggestions.map((loc) => (
-          <li onClick={() => suggestionSelected(loc)}>{loc[0]}</li>
+          <SuggestionsItem onClick={() => suggestionSelected(loc)}>
+            {loc[0]}
+          </SuggestionsItem>
         ))}
       </SuggestionsList>
     );
@@ -68,9 +70,12 @@ const HomeStart = ({
 
   return (
     <>
-      <DetailsContainer>
+      <DetailsContainer height={suggestions.length != 0 ? '60vh' : '50vh'}>
         <TextContainer>Start You Ride Now!</TextContainer>
         <TextContainer>With AppName</TextContainer>
+        <TextContainer fontSize="12px">
+          Nearest Bike Location: {nearestLocation}
+        </TextContainer>
         <TextInputContainer>
           <ButtonText>Start</ButtonText>
           <TextInput
@@ -84,6 +89,7 @@ const HomeStart = ({
 
           <MapIcon>
             <FaMapMarked
+              cursor="pointer"
               size={17}
               onClick={() => {
                 setLocation(locat);
@@ -105,9 +111,21 @@ const HomeStart = ({
           locations.find(
             (elem) => elem[0].toLowerCase() == text.toLowerCase()
           ) ? (
-            <ButtonRoute to={homeRide}>Get Started</ButtonRoute>
+            <ButtonRoute
+              to={homeRide}
+              onClick={() => {
+                setLocation(locat);
+              }}
+            >
+              Get Started
+            </ButtonRoute>
           ) : (
-            <ButtonRoute to={homeStart}>Get Started</ButtonRoute>
+            <ButtonRoute
+              to={homeStart}
+              onClick={() => alert('Select Location')}
+            >
+              Get Started
+            </ButtonRoute>
           )}
         </ButtonWrapper>
       </DetailsContainer>

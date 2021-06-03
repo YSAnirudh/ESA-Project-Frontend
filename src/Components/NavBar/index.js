@@ -17,10 +17,11 @@ import {
   register,
   homeAfterLogin,
   root,
+  homeRiding,
 } from '../../Constants/RouteInfo';
 //import {IoPerson} from 'react-icons/io5';
 
-function NavBar({toggle, isLogin, setHomeStart}) {
+function NavBar({toggle, isLogin, setHomeStart, isRiding}) {
   function WhichPage(props) {
     const IsLogin = props.IsLogin;
     if (IsLogin) {
@@ -56,7 +57,7 @@ function NavBar({toggle, isLogin, setHomeStart}) {
           </MobileIcon>
           <NavMenu>
             <NavItem>
-              <NavLinks to={homeStart}>Home</NavLinks>
+              <NavLinks to={isRiding ? homeRiding : homeStart}>Home</NavLinks>
             </NavItem>
             <NavItem>
               <NavLinks to={history}>History</NavLinks>

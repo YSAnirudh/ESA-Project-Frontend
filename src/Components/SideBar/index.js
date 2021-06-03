@@ -17,9 +17,10 @@ import {
   register,
   homeAfterLogin,
   root,
+  homeRiding,
 } from '../../Constants/RouteInfo';
 
-const SideBar = ({isOpen, toggle, isLogin}) => {
+const SideBar = ({isOpen, toggle, isLogin, isRiding}) => {
   function WhichPage(props) {
     const IsLogin = props.IsLogin;
     if (IsLogin) {
@@ -47,7 +48,10 @@ const SideBar = ({isOpen, toggle, isLogin}) => {
         </Icon>
         <SideBarWrapper>
           <SideBarMenu>
-            <SideBarLink to={homeStart} onClick={toggle}>
+            <SideBarLink
+              to={isRiding ? homeRiding : homeStart}
+              onClick={toggle}
+            >
               Home
             </SideBarLink>
             <SideBarLink to={history} onClick={toggle}>

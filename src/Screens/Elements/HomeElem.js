@@ -10,15 +10,26 @@ export const PageContainer = styled.div`
   box-sizing: border-box;
 `;
 
+export const SuggestionsItem = styled.li`
+  list-style-type: none;
+  cursor: pointer;
+  width: 100%;
+  margin-left: -20px;
+  &:hover {
+    background-color: #999;
+  }
+`;
+
 export const SuggestionsList = styled.ul`
   display: flex;
   flex-direction: column;
-  width: 95%;
+  width: ${(props) => props.width || '95%'};
   margin-top: -4px;
   background-color: #ccc;
   border-radius: 5px;
   max-height: 100px;
   overflow: auto;
+
   ::-webkit-scrollbar {
     border-radius: 5px;
     width: 10px;
@@ -48,7 +59,7 @@ export const DetailsContainer = styled.div`
   background: #fefefe;
   position: relative;
   width: 40%;
-  height: 50vh;
+  height: ${(props) => props.height || '50vh'};
   min-height: 200px;
   max-width: 300px;
   border-radius: 5px;
@@ -67,10 +78,10 @@ export const TextInputContainer = styled.div`
   align-items: center;
   background-color: #ccc;
   border-radius: 5px;
-  width: 95%;
+  width: ${(props) => props.width || '95%'};
   box-sizing: border-box;
-  margin: 10px 0 5px 0;
-  padding: 10px 0 10px 0;
+  margin: 5px 0 5px 0;
+  padding: 5px 0 5px 0;
   @media screen and (max-width: 650px) {
     margin: 20px 0 10px 0;
     padding: 20px 0 20px 0;
@@ -123,11 +134,12 @@ export const TextInput = styled.input`
 
 export const ButtonText = styled.text`
   font-weight: lighter;
-  color: grey;
+  color: ${(props) => props.colorChange || 'grey'};
   font-family: Arial, Helvetica, sans-serif;
   font-size: 0.8rem;
   margin-left: 10px;
-  width: 20%;
+  margin-right: 5px;
+  width: ${(props) => props.width || '20%'};
   @media screen and (max-width: 650px) {
     font-size: 1.2rem;
   }
@@ -168,6 +180,7 @@ export const ButtonRoute = styled(NavLink)`
   color: black;
   font-family: Arial, Helvetica, sans-serif;
   padding: 0 3px 0 3px;
+
   @media screen and (max-width: 650px) {
     font-size: ${(props) => props.mobFontSize || '20px'};
   }
@@ -184,6 +197,18 @@ export const Button = styled.button`
   color: black;
   font-family: Arial, Helvetica, sans-serif;
   padding: 0 3px 0 3px;
+  border-radius: 5px;
+  width: 95%;
+  box-sizing: border-box;
+  padding: 10px 0 10px 0;
+  cursor: pointer;
+  margin-top: 10px;
+
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #ccc;
+    color: #010606;
+  }
   @media screen and (max-width: 650px) {
     font-size: ${(props) => props.mobFontSize || '20px'};
   }
@@ -230,5 +255,29 @@ export const BackButtonWrapper = styled.div`
     transition: all 0.2s ease-in-out;
     background: #ccc;
     color: #010606;
+  }
+`;
+
+export const DropButton = styled.button`
+  cursor: pointer;
+  font-size: ${(props) => props.fontSize || '12px'};
+  border: 0;
+  font-weight: lighter;
+  color: black;
+  border: 1px solid black;
+  margin-top: 0;
+  background: #ccc;
+  font-family: Arial, Helvetica, sans-serif;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin: 5px 0 0 40px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  @media screen and (max-width: 650px) {
+    font-size: ${(props) => props.mobFontSize || '16px'};
+  }
+  &:hover {
+    transition: all 0.2s ease-in-out;
+    background: #ccc;
   }
 `;

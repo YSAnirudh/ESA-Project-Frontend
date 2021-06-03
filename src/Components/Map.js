@@ -1,39 +1,40 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {LoadScript, GoogleMap} from '@react-google-maps/api';
 import {ButtonWrapper, MapElements} from './MapElem';
 import {IoIosArrowDown} from 'react-icons/io';
 import L, {latLng} from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import {Button} from './MapElem';
-function Maps({isMapVisible, toggleMap, locations, setLocation}) {
+function Maps({isMapVisible, toggleMap, locations, setLocation, userLoc}) {
   //function handleApiLoaded(map, maps) {}
-  const defaultCenter = {lat: 41.3851, lng: 2.1734};
-  const defaultCenter1 = {lat: 41.3851, lng: 2};
-  const arr = [defaultCenter, defaultCenter1];
   var locs = locations;
+
   // console.log(locs);
   const pin = (location) => {
     return (
-      <Marker
-        riseOnHover={true}
-        riseOffset={1000}
-        title={location[0]}
-        position={location[1]}
-      >
-        <Popup>
-          {location[0]}
-          <Button
-            onClick={() => {
-              // console.log(location);
-              setLocation(location);
-              toggleMap();
-            }}
-          >
-            Select
-          </Button>
-        </Popup>
-      </Marker>
+      <>
+        <Marker
+          riseOnHover={true}
+          riseOffset={1000}
+          title={location[0]}
+          position={location[1]}
+        >
+          <Popup>
+            {location[0]}
+            <Button
+              onClick={() => {
+                // console.log(location);
+                setLocation(location);
+                toggleMap();
+              }}
+            >
+              Select
+            </Button>
+          </Popup>
+        </Marker>
+      </>
     );
   };
 
@@ -44,14 +45,16 @@ function Maps({isMapVisible, toggleMap, locations, setLocation}) {
     }
     return arr;
   };
-
-  // delete L.Icon.Default.prototype._getIconUrl;
-
-  // L.Icon.Default.mergeOptions({
-  //   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-  //   iconUrl: require('leaflet/dist/images/marker-icon.png'),
-  //   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
-  // });
+  var greenIcon = new L.Icon({
+    iconUrl:
+      'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
+    shadowUrl:
+      'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+  });
 
   return (
     <>
@@ -66,6 +69,13 @@ function Maps({isMapVisible, toggleMap, locations, setLocation}) {
             attribution='&copy; <a href="http://osm.org/copyright”>OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          <Marker
+            title={'Your Location'}
+            position={latLng(userLoc ? [userLoc[0], userLoc[1]] : [0, 0])}
+            icon={greenIcon}
+          >
+            <Popup>{'Your Location.'}</Popup>
+          </Marker>
           {pins(locs)}
         </MapContainer>
       </MapElements>

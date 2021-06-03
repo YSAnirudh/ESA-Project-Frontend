@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import '../App.css';
 import {Route, Switch, Redirect, useHistory} from 'react-router-dom';
 import History from './History';
@@ -28,7 +28,7 @@ import Payment from './Payment';
 import HomeStart from './HomeComponents/HomeStart';
 import HomeRide from './HomeComponents/HomeRide';
 import HomeRiding from './HomeComponents/HomeRiding';
-import {getLocations} from './MapAPICalls/Locations';
+const geolib = require('geolib');
 
 function Start({isOpen, updateIsOpen, isLogin}) {
   const bookinghist = [
@@ -71,40 +71,72 @@ function Start({isOpen, updateIsOpen, isLogin}) {
     username: 'raghus',
     phnumber: '7995948888',
   };
-  const [isMapOpen, setIsMapOpen] = useState(true);
 
+  const [isMapOpen, setIsMapOpen] = useState(true);
   const toggle = () => {
     setIsMapOpen(!isMapOpen);
   };
 
+  const [locations, setLocations] = useState([]);
+  const handleGetLocations = () => {
+    fetch('http://localhost:5000/home/getRide', {
+      method: 'GET',
+      headers: {'Content-Type': 'application/json'},
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        setLocations(res.Locations);
+      });
+  };
+
+  const [userLoc, setUserLoc] = useState(userLoc);
+  const successHandler = (position) => {
+    setUserLoc([position.coords.latitude, position.coords.longitude]);
+  };
+  const errorHandler = (error) => console.error(error.message);
+  const getLocation = (locats) => {
+    if (!userLoc) {
+      navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
+    }
+  };
+
+  const [nearestLocation, setNearestLocation] = useState('');
+  const calcNearestLocation = (loca, locats) => {
+    var min = 100000000000.0;
+    var loc = '';
+    for (var i = 0; i < locats.length; i++) {
+      var dist = geolib.getDistance(
+        {latitude: locats[i][1][0], longitude: locats[i][1][1]},
+        {latitude: loca[0], longitude: loca[1]}
+      );
+      if (dist < min) {
+        loc = locats[i][0];
+        min = dist;
+      } else {
+        min = min;
+      }
+      console.log(loc);
+    }
+    setNearestLocation(loc);
+    console.log(loc);
+  };
+
+  useEffect(() => {
+    handleGetLocations();
+    getLocation();
+  }, []);
+
   const [location, setLocation] = useState(['', [0, 0]]);
-
-  var locations = [
-    ['Habsiguda', [17.400344025158084, 78.53896233520851]], // Habsiguda
-
-    ['Secunderabad', [17.442501556334673, 78.49498901668164]], // Secunderabad
-
-    ['Ameerpet', [17.43477857257373, 78.44565373814939]], // Ameerpet
-
-    ['Kukatpally', [17.49593900920454, 78.39781262125594]], // Kukatpally
-
-    ['Gachibowli', [17.439509293158775, 78.36117774001633]], // Gachibowli
-
-    ['Miyapur', [17.49636148413489, 78.35840285354759]], // Miyapur
-
-    ['BHEL', [17.495493340624552, 78.31758770358886]], //BHEL
-
-    ['Bachupally', [17.541128272621126, 78.36287564255261]], // Bachupally
-
-    ['Gandimaisamma', [17.57480682461022, 78.42459756604019]], // Gandimaisamma
-
-    ['Jeedimetla', [17.507852515230798, 78.44794237948909]], // Jeedimetla
-  ];
-
+  const [isRiding, setIsRiding] = useState(false);
   return (
     <>
-      <SideBar isOpen={isOpen} toggle={updateIsOpen} isLogin={false} />
-      <NavBar toggle={updateIsOpen} isLogin={isLogin} />
+      <SideBar
+        isOpen={isOpen}
+        toggle={updateIsOpen}
+        isLogin={false}
+        isRiding={isRiding}
+      />
+      <NavBar toggle={updateIsOpen} isLogin={isLogin} isRiding={isRiding} />
       <Switch>
         <Route exact path={homeAfterLogin} />
         <Route
@@ -125,6 +157,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
                   toggleMap={toggle}
                   locations={locations}
                   setLocation={setLocation}
+                  userLoc={userLoc}
                 />
               ) : (
                 <>
@@ -135,6 +168,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
                     locations={locations}
                     setLocation={setLocation}
                     location={location}
+                    nearestLocation={nearestLocation}
                   />
                 </>
               )}
@@ -147,7 +181,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
           component={() => (
             <PageContainer>
               <BackVid />
-              <HomeRide location={location} />
+              <HomeRide location={location} setIsRiding={setIsRiding} />
             </PageContainer>
           )}
         />
@@ -157,7 +191,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
           component={() => (
             <PageContainer>
               <BackVid />
-              <HomeRiding location={location} />
+              <HomeRiding location={location} setIsRiding={setIsRiding} />
             </PageContainer>
           )}
         />
