@@ -17,9 +17,13 @@ export const loginUser = (userData,props, history) => {
         history.push('/home');
         console.log(res)
       } )
-      .catch(err =>{
-        console.log(err)
-      }
-        
+      .catch(
+        function (error) {
+          if (error.response) {
+            
+            alert('please enter correct password , phonenumber')
+            
+          }
+        }
       );
   };

@@ -7,12 +7,13 @@ export const registerUser = (userData, history) => {
         history.push("/login")
         console.log(res)
       } )
-      .catch(err =>{
-        
-        if(err.status === 400){
-          console.log("error")
+      .catch(
+        function (error) {
+          if (error.response) {
+            
+            alert('PhoneNumber,Licensenumber and Email already exsist,please enter unique details ')
+            
+          }
         }
-      }
-        
       );
   };
