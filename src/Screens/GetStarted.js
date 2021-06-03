@@ -66,12 +66,6 @@ function Start({isOpen, updateIsOpen, isLogin}) {
     },
   ];
 
-  const profiledata = {
-    email: 'abhinavaaa@gmail.com',
-    username: 'raghus',
-    phnumber: '7995948888',
-  };
-
   const [isMapOpen, setIsMapOpen] = useState(true);
   const toggle = () => {
     setIsMapOpen(!isMapOpen);
@@ -87,6 +81,48 @@ function Start({isOpen, updateIsOpen, isLogin}) {
       .then((res) => {
         setLocations(res.Locations);
       });
+  };
+
+  const [profiledata, setProfileData] = useState({});
+  const handleGetProfileData = () => {
+    fetch('http://localhost:5000/details/account', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({userId: '95ff6bf5-a85b-4260-a503-ce983195ed93'}),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res);
+        setProfileData(res);
+      })
+      .catch((err) => console.log(err));
+  };
+  const setProfData = (user, phone, emailAdd, lno) => {
+    setProfileData({
+      username: user,
+      email: emailAdd,
+      phoneNo: phone,
+      licenseNo: lno,
+    });
+    // backend post
+  };
+
+  const [balance, setBalance] = useState(0);
+  const handleGetBalance = () => {
+    fetch('http://localhost:5000/wallet/balance', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({userId: '95ff6bf5-a85b-4260-a503-ce983195ed93'}),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res.balance);
+        setBalance(res.balance);
+      })
+      .catch((err) => console.log(err));
+  };
+  const setBal = (bal) => {
+    setBalance(bal);
   };
 
   const [userLoc, setUserLoc] = useState(userLoc);
@@ -124,6 +160,8 @@ function Start({isOpen, updateIsOpen, isLogin}) {
   useEffect(() => {
     handleGetLocations();
     getLocation();
+    handleGetProfileData();
+    handleGetBalance();
   }, []);
 
   const [location, setLocation] = useState(['', [0, 0]]);
@@ -207,15 +245,26 @@ function Start({isOpen, updateIsOpen, isLogin}) {
         <Route
           exact
           path={account}
-          component={() => <Account info={profiledata} />}
+          component={() => (
+            <Account profiledata={profiledata} setProfileData={setProfData} />
+          )}
         />
         <Route
           exact
           path={editProfile}
-          component={() => <EditAccount info={profiledata} />}
+          component={() => (
+            <EditAccount
+              profiledata={profiledata}
+              setProfileData={setProfData}
+            />
+          )}
         />
 
-        <Route exact path={accountBalance} component={() => <Balance />} />
+        <Route
+          exact
+          path={accountBalance}
+          component={() => <Balance balance={balance} setBalance={setBal} />}
+        />
         <Route exact path={payment} component={() => <Payment />} />
         <Route component={Error} />
       </Switch>

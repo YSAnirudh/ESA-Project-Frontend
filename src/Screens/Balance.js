@@ -2,9 +2,10 @@ import React from 'react';
 import {useState} from 'react';
 import {BalancePopup} from './BalancePopup';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import {useHistory} from 'react-router';
 
-function Balance() {
-  const [balance, setbalance] = useState(0);
+function Balance({balance, setBalance}) {
+  const [bal, setbalance] = useState(parseInt(balance));
   const [buttonpopup, setbuttonpopup] = useState(false);
   const [addmoney, setaddmoney] = useState('');
 
@@ -15,9 +16,15 @@ function Balance() {
 
   const addedMoney = (e) => {
     setbuttonpopup(false);
-    //console.log(balance + addmoney)
-    setbalance(parseInt(balance) + parseInt(addmoney));
+    const tempBalance = parseInt(bal) + parseInt(addmoney);
+    setbalance(tempBalance);
     setaddmoney('');
+    setBalance(tempBalance);
+  };
+
+  const history = useHistory();
+  const goToAccount = () => {
+    history.push('/account');
   };
 
   return (
@@ -31,7 +38,7 @@ function Balance() {
       </div>
       <div class="card w-75 container my-5">
         <div class="card-body">
-          <h5 class="card-title">Balance Money : {balance}</h5>
+          <h5 class="card-title">Balance Money : {bal}</h5>
           <p class="card-text">This is your virtual money.</p>
           <a
             href="#"
@@ -39,6 +46,9 @@ function Balance() {
             onClick={() => setbuttonpopup(true)}
           >
             Add Money
+          </a>
+          <a href="#" class="btn btn-primary" onClick={goToAccount}>
+            Go Back
           </a>
         </div>
         <BalancePopup trigger={buttonpopup}>
@@ -52,6 +62,7 @@ function Balance() {
             >
               Add
             </button>
+
             <button
               type="button"
               class="btn btn-danger mx-2"

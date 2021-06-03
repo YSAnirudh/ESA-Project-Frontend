@@ -12,33 +12,15 @@ import {
 } from './Elements/AccountElem';
 import {useHistory} from 'react-router';
 
-function Account(props) {
-  const [location, setlocation] = useState('');
-  const [email, setemail] = useState(props.info.email);
-  const [username, setusername] = useState(props.info.username);
-  const [phnumber, setphnumber] = useState(props.info.phnumber);
-  const [editable, seteditable] = useState(false);
+function Account({profiledata}) {
+  const [email, setemail] = useState(profiledata.email);
+  const [username, setusername] = useState(profiledata.username);
+  const [phnumber, setphnumber] = useState(profiledata.phoneNo);
+  const [licenseNo, setLicenseNo] = useState(profiledata.licenseNo);
   const [balancePopup, setBalancePopup] = useState(false);
 
   const onViewDLClick = () => {
     setBalancePopup(!balancePopup);
-  };
-
-  const locationChange = (e) => {
-    console.log(e.target.value);
-    setlocation(e.target.value);
-  };
-
-  const emailChange = (e) => {
-    setemail(e.target.value);
-  };
-
-  const usernameChange = (e) => {
-    setusername(e.target.value);
-  };
-
-  const phnumberChange = (e) => {
-    setphnumber(e.target.value);
   };
 
   const history = useHistory();
@@ -82,6 +64,15 @@ function Account(props) {
               >
                 <Form.Label>Phone No</Form.Label>
                 <Form.Text>{phnumber}</Form.Text>
+              </Form.Group>
+
+              <Form.Group
+                as={Row}
+                className="my-3"
+                controlId="formHorizontalPassword"
+              >
+                <Form.Label>License No</Form.Label>
+                <Form.Text>{licenseNo}</Form.Text>
               </Form.Group>
 
               <Form.Group

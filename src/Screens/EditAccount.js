@@ -6,16 +6,16 @@ import '../CSS/Profile.css';
 import {ButtonWrapper} from './Elements/AccountElem';
 import logo from '../Assets/DL.png';
 import '../CSS/Account.css';
-export default function EditAccount(props) {
-  const [location, setlocation] = useState('');
-  const [email, setemail] = useState(props.info.email);
-  const [username, setusername] = useState(props.info.username);
-  const [phnumber, setphnumber] = useState(props.info.phnumber);
-  const [editable, seteditable] = useState(false);
+import {useHistory} from 'react-router';
 
-  const locationChange = (e) => {
-    console.log(e.target.value);
-    setlocation(e.target.value);
+export default function EditAccount({profiledata, setProfileData}) {
+  const [email, setemail] = useState(profiledata.email);
+  const [username, setusername] = useState(profiledata.username);
+  const [phnumber, setphnumber] = useState(profiledata.phoneNo);
+  const [licenseNo, setLicenseNo] = useState(profiledata.licenseNo);
+
+  const profileDataChange = () => {
+    setProfileData(username, phnumber, email, licenseNo);
   };
 
   const emailChange = (e) => {
@@ -28,6 +28,14 @@ export default function EditAccount(props) {
 
   const phnumberChange = (e) => {
     setphnumber(e.target.value);
+  };
+
+  const lnumberChange = (e) => {
+    setLicenseNo(e.target.value);
+  };
+  const history = useHistory();
+  const goToAccount = () => {
+    history.push('/account');
   };
 
   return (
@@ -46,7 +54,7 @@ export default function EditAccount(props) {
                   className="my-3"
                   controlId="formHorizontalEmail"
                 >
-                  <Form.Label column sm={2}>
+                  <Form.Label column sm={3}>
                     Email
                   </Form.Label>
                   <Col>
@@ -64,7 +72,7 @@ export default function EditAccount(props) {
                   className="my-3"
                   controlId="formHorizontalPassword"
                 >
-                  <Form.Label column sm={2}>
+                  <Form.Label column sm={3}>
                     UserName
                   </Form.Label>
                   <Col>
@@ -82,7 +90,7 @@ export default function EditAccount(props) {
                   className="my-3"
                   controlId="formHorizontalPassword"
                 >
-                  <Form.Label column sm={2}>
+                  <Form.Label column sm={3}>
                     Phone No
                   </Form.Label>
                   <Col>
@@ -95,38 +103,23 @@ export default function EditAccount(props) {
                   </Col>
                 </Form.Group>
 
-                {/* <div>
-              <Form.Label
-                column
-                sm={2}
-                className="my-1 mr-2"
-                htmlFor="inlineFormCustomSelectPref"
-              >
-                Driving Licence
-              </Form.Label>
-              <img src={logo} class="img-thumbnail" alt="..." />
-            </div> */}
-
-                {/* <div>
-              <Form.Label
-                column
-                sm={2}
-                className="my-1 mr-2"
-                htmlFor="inlineFormCustomSelectPref"
-              >
-                Location
-              </Form.Label>
-              <Form.Control
-                as="select"
-                className="my-1 mr-sm-2"
-                id="inlineFormCustomSelectPref"
-                onChange={locationChange}
-                custom
-              >
-                <option value="India">India</option>
-                <option value="Dummy">Dummy</option>
-              </Form.Control>
-            </div> */}
+                <Form.Group
+                  as={Row}
+                  className="my-3"
+                  controlId="formHorizontalPassword"
+                >
+                  <Form.Label column sm={3}>
+                    License No
+                  </Form.Label>
+                  <Col>
+                    <Form.Control
+                      type="text"
+                      placeholder="License No"
+                      value={licenseNo}
+                      onChange={lnumberChange}
+                    />
+                  </Col>
+                </Form.Group>
 
                 <Form.Group as={Row} className="my-3">
                   <div
@@ -137,7 +130,22 @@ export default function EditAccount(props) {
                     }}
                   >
                     <ButtonWrapper>
-                      <Button type="submit" className="mybutton">
+                      <Button
+                        type="submit"
+                        className="mybutton"
+                        onClick={goToAccount}
+                      >
+                        Go Back
+                      </Button>
+                    </ButtonWrapper>
+                    <ButtonWrapper>
+                      <Button
+                        type="submit"
+                        className="mybutton"
+                        onClick={() => {
+                          profileDataChange();
+                        }}
+                      >
                         Save Changes
                       </Button>
                     </ButtonWrapper>

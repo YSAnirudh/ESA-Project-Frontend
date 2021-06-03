@@ -5,7 +5,9 @@
   color: black;
 }
 a.btn-primary {
+  width: 30%;
   background-color: #01bf71;
+  margin-right: 5rem;
   border: 0;
   color: black;
 }
