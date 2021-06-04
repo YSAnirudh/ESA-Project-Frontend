@@ -6,6 +6,7 @@ import {Route, Switch, useHistory} from 'react-router-dom';
 import {homeAfterLogin} from './Constants/RouteInfo';
 import NavBar from './Components/NavBar';
 import SideBar from './Components/SideBar';
+import Landing from './Components/layout/index'
 function App(props) {
   const [isLogin, setIsLogin] = useState(true);
 
@@ -21,12 +22,15 @@ function App(props) {
   const renderLogin = () => {
     if (isLogin) {
       return (
+        
         <LoginHome
           isLogin={isLogin}
           updateIsOpen={updateIsOpen}
           isOpen={isOpen}
           updateIsLogin={updateisLogin}
         />
+        
+        
       );
     } else {
       return (
@@ -40,7 +44,8 @@ function App(props) {
     }
   };
 
-  return <>{renderLogin()}</>;
+  return <>{renderLogin()}
+  </>;
 }
 
 export default App;

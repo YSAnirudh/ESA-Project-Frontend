@@ -4,7 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 import NavBar from '../Components/NavBar';
 import SideBar from '../Components/SideBar';
-import Landing from '../Components/layout/Landing';
+import Landing from '../Components/layout/index';
 import Register from '../Components/auth/Register';
 import Login from '../Components/auth/Login';
 
@@ -31,6 +31,7 @@ export default function LoginHome({
         />
         
       </div>
+      
     </>
   );
 }

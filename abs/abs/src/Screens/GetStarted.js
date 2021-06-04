@@ -27,6 +27,7 @@ import Payment from './Payment';
 import HomeStart from './HomeComponents/HomeStart';
 import HomeRide from './HomeComponents/HomeRide';
 import HomeRiding from './HomeComponents/HomeRiding';
+import AfterLogin from '../Components/layout/afterlogin';
 
 function Start({isOpen, updateIsOpen, isLogin}) {
   const bookinghist = [
@@ -79,7 +80,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
       <SideBar isOpen={isOpen} toggle={updateIsOpen} isLogin={false} />
       <NavBar toggle={updateIsOpen} isLogin={isLogin} />
       <Switch>
-        <Route exact path={homeAfterLogin} />
+        <Route exact path={homeAfterLogin} component = {AfterLogin} />
         <Route
           exact
           path={login}

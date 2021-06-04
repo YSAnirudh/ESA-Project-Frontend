@@ -12,7 +12,7 @@ export const loginUser = (userData,props, history) => {
       .then(res =>{
          const {userId} = res.data
         localStorage.setItem("userId",userId)
-
+        
         props.updateIsLogin();
         history.push('/home');
         console.log(res)

@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from 'react-router-dom';
+import Landing from './Components/layout/index'
 
 ReactDOM.render(
   <React.StrictMode>
@@ -24,6 +25,7 @@ ReactDOM.render(
    
       <BrowserRouter>
         <App />
+       
       </BrowserRouter>
     
   </React.StrictMode>,
