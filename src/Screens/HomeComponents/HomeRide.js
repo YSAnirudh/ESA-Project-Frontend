@@ -21,14 +21,22 @@ import {
 } from '../Elements/HomeElem';
 import {FaAngleDown} from 'react-icons/fa';
 
-const HomeRide = ({toggleHomeStart, toggleHomeRide, location, setIsRiding}) => {
+const HomeRide = ({
+  toggleHomeStart,
+  toggleHomeRide,
+  location,
+  setIsRiding,
+  vehicles,
+  phoneNo,
+  costStr,
+  setVehNo,
+  userId,
+}) => {
   const [text, setText] = useState('');
   const [OTP, setOTP] = useState(
     '0' /*Math.floor(Math.random() * 900000 + 100000)*/
   );
   // POST the locations info and get back list of vehicles
-
-  var vehicles = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   const onTextChange = (e) => {
     const value = e.target.value;
@@ -42,13 +50,17 @@ const HomeRide = ({toggleHomeStart, toggleHomeRide, location, setIsRiding}) => {
   };
   const showVehicles = () => {
     if (openDraw) {
-      return (
+      return vehicles.length != 0 ? (
         <SuggestionsList>
-          {vehicles.map((vhNo) => (
+          {vehicles.sort().map((vhNo) => (
             <SuggestionsItem onClick={() => vehicleSelected(vhNo)}>
               {vhNo}
             </SuggestionsItem>
           ))}
+        </SuggestionsList>
+      ) : (
+        <SuggestionsList>
+          <SuggestionsItem>No Vehicles at {location[0]}</SuggestionsItem>
         </SuggestionsList>
       );
     }
@@ -59,12 +71,33 @@ const HomeRide = ({toggleHomeStart, toggleHomeRide, location, setIsRiding}) => {
     setOpenDraw(false);
   };
 
+  // const [costStr, setCostStr] = useState('');
+  const handlePostLocationAndVhNO = (locat) => {
+    fetch('http://localhost:5000/home/startRide', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        userId: userId,
+        vehicleId: vhNo,
+        startLocation: locat[0],
+      }),
+    })
+      .then((response) => console.log(response.json()))
+      .catch((err) => console.log(err));
+  };
+
   return (
     <DetailsContainer height={openDraw ? '65vh' : '55vh'}>
       <TextContainer fontSize={10}>Your Ride</TextContainer>
       <TextContainer fontSize={10}>From: {location[0]}</TextContainer>
-      <TextContainer fontSize={10}>Cost: Rs.y/1hr</TextContainer>
-      <TextContainer fontSize={10}>OTP Sent to : ---</TextContainer>
+      <TextContainer fontSize={10}>Cost: {costStr}</TextContainer>
+      {location[0] != '' ? (
+        <TextContainer fontSize={10}>OTP Sent to : {phoneNo}</TextContainer>
+      ) : (
+        <TextContainer fontSize={10}>
+          Go Back and Select a Location
+        </TextContainer>
+      )}
       <TextInputContainer width="auto">
         <ButtonText width={30}>Vehicle No. {vhNo != -1 ? vhNo : ''}</ButtonText>
         <FaAngleDown
@@ -83,7 +116,6 @@ const HomeRide = ({toggleHomeStart, toggleHomeRide, location, setIsRiding}) => {
           id="start"
           placeholder="Enter OTP"
           type="number"
-          step={0.01}
           value={text}
           onChange={(e) => {
             onTextChange(e);
@@ -116,6 +148,8 @@ const HomeRide = ({toggleHomeStart, toggleHomeRide, location, setIsRiding}) => {
               to={homeRiding}
               onClick={() => {
                 setIsRiding(true);
+                setVehNo(vhNo);
+                handlePostLocationAndVhNO(location);
               }}
             >
               Start Ride

@@ -31,42 +31,8 @@ import HomeRiding from './HomeComponents/HomeRiding';
 const geolib = require('geolib');
 
 function Start({isOpen, updateIsOpen, isLogin}) {
-  const bookinghist = [
-    {
-      name: 'Ride-1',
-      startpoint: 'hyderabad',
-      destination: 'Guntur',
-      duration: 'Duration',
-      fare: '1000 rs',
-      date: '10-5-2020',
-    },
-    {
-      name: 'Ride-2',
-      startpoint: 'bellam',
-      destination: 'paakam',
-      duration: '1 sec',
-      fare: '100 rs',
-      date: '11-5-2020',
-    },
-    {
-      name: 'Ride-2',
-      startpoint: 'bellam',
-      destination: 'paakam',
-      duration: '1 sec',
-      fare: '100 rs',
-      date: '11-5-2020',
-    },
-    {
-      name: 'Ride-2',
-      startpoint: 'bellam',
-      destination: 'paakam',
-      duration: '1 sec',
-      fare: '100 rs',
-      date: '11-5-2020',
-    },
-  ];
-
-  const [isMapOpen, setIsMapOpen] = useState(true);
+  const [userId, setUserId] = useState('95ff6bf5-a85b-4260-a503-ce983195ed93');
+  const [isMapOpen, setIsMapOpen] = useState(false);
   const toggle = () => {
     setIsMapOpen(!isMapOpen);
   };
@@ -88,7 +54,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
     fetch('http://localhost:5000/details/account', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({userId: '95ff6bf5-a85b-4260-a503-ce983195ed93'}),
+      body: JSON.stringify({userId: userId}),
     })
       .then((response) => response.json())
       .then((res) => {
@@ -103,7 +69,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
       phoneNo: phone,
       licenseNo: lno,
     });
-    // backend post
+    // backend post BIGNOO
   };
 
   const [balance, setBalance] = useState(0);
@@ -111,7 +77,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
     fetch('http://localhost:5000/wallet/balance', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({userId: '95ff6bf5-a85b-4260-a503-ce983195ed93'}),
+      body: JSON.stringify({userId: userId}),
     })
       .then((response) => response.json())
       .then((res) => {
@@ -121,6 +87,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
   };
   const setBal = (bal) => {
     setBalance(bal);
+    // BIGNOO
   };
 
   const [bookingHistory, setBookingHistory] = useState([]);
@@ -128,12 +95,51 @@ function Start({isOpen, updateIsOpen, isLogin}) {
     fetch('http://localhost:5000/details/history', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({userId: '95ff6bf5-a85b-4260-a503-ce983195ed93'}),
+      body: JSON.stringify({userId: userId}),
     })
       .then((response) => response.json())
       .then((res) => {
         console.log(res);
         setBookingHistory(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const [userCache, setUserCache] = useState([]);
+  const handleGetUserCache = () => {
+    fetch('http://localhost:5000/home/getCache', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({userId: userId}),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res);
+        setUserCache(res);
+      })
+      .catch((err) => console.log(err));
+  };
+  const [location, setLocation] = useState(['', [0, 0]]);
+  const [vehicles, setVehicles] = useState([]);
+  const [costStr, setCostStr] = useState('');
+  const handleGetVehicles = (locat) => {
+    fetch('http://localhost:5000/bike/getVehicles', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        startLocation: locat[0],
+        userId: userId,
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => res)
+      .then((veh) => {
+        let vehic = [];
+        for (var i = 0; i < veh['vehicles'].length; i++) {
+          vehic.push(veh['vehicles'][i]['vehicleId']);
+        }
+        setVehicles(vehic);
+        setCostStr(veh['cost']);
       })
       .catch((err) => console.log(err));
   };
@@ -170,16 +176,20 @@ function Start({isOpen, updateIsOpen, isLogin}) {
     console.log(loc);
   };
 
+  const [vhNo, setVhNo] = useState(-1);
+
   useEffect(() => {
     handleGetLocations();
     getLocation();
     handleGetProfileData();
     handleGetBalance();
     handleGetHistory();
+    handleGetUserCache();
   }, []);
 
-  const [location, setLocation] = useState(['', [0, 0]]);
-  const [isRiding, setIsRiding] = useState(false);
+  const [isRiding, setIsRiding] = useState(
+    userCache.length == 0 ? false : true
+  );
   return (
     <>
       <SideBar
@@ -221,6 +231,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
                     setLocation={setLocation}
                     location={location}
                     nearestLocation={nearestLocation}
+                    getVehicles={handleGetVehicles}
                   />
                 </>
               )}
@@ -233,7 +244,15 @@ function Start({isOpen, updateIsOpen, isLogin}) {
           component={() => (
             <PageContainer>
               <BackVid />
-              <HomeRide location={location} setIsRiding={setIsRiding} />
+              <HomeRide
+                location={location}
+                setIsRiding={setIsRiding}
+                vehicles={vehicles}
+                setVehNo={setVhNo}
+                phoneNo={profiledata['phoneNo']}
+                costStr={costStr}
+                userId={userId}
+              />
             </PageContainer>
           )}
         />
@@ -243,7 +262,12 @@ function Start({isOpen, updateIsOpen, isLogin}) {
           component={() => (
             <PageContainer>
               <BackVid />
-              <HomeRiding location={location} setIsRiding={setIsRiding} />
+              <HomeRiding
+                location={location}
+                setIsRiding={setIsRiding}
+                userId={userId}
+                vhNo={vhNo}
+              />
             </PageContainer>
           )}
         />
@@ -277,7 +301,14 @@ function Start({isOpen, updateIsOpen, isLogin}) {
         <Route
           exact
           path={accountBalance}
-          component={() => <Balance balance={balance} setBalance={setBal} />}
+          component={() => (
+            <Balance
+              balance={balance}
+              setBalance={setBal}
+              userId={userId}
+              getBal={handleGetBalance}
+            />
+          )}
         />
         <Route exact path={payment} component={() => <Payment />} />
         <Route component={Error} />

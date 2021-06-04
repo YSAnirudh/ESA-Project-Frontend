@@ -26,6 +26,7 @@ const HomeStart = ({
   setLocation,
   location,
   nearestLocation,
+  getVehicles,
 }) => {
   const [locat, setLocat] = useState(location);
   const [suggestions, setSuggestions] = useState([]);
@@ -99,13 +100,6 @@ const HomeStart = ({
           </MapIcon>
         </TextInputContainer>
         {showSuggestions()}
-        {/* <TextInputContainer>
-          <ButtonText>End</ButtonText>
-          <TextInput id="end" placeholder="Destination" />
-          <MapIcon>
-            <FaMapMarked size={17} onClick={toggleMap} />
-          </MapIcon>
-        </TextInputContainer> */}
         <ButtonWrapper>
           {text != '' &&
           locations.find(
@@ -115,6 +109,7 @@ const HomeStart = ({
               to={homeRide}
               onClick={() => {
                 setLocation(locat);
+                getVehicles(locat);
               }}
             >
               Get Started

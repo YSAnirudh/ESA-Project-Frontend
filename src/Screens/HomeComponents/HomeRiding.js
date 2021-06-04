@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useHistory} from 'react-router';
 import {
   homeRide,
   homeRiding,
@@ -15,7 +16,7 @@ import {
 } from '../Elements/HomeElem';
 import Timer from './Timer';
 
-const HomeRiding = ({location, setIsRiding}) => {
+const HomeRiding = ({location, setIsRiding, userId, vhNo}) => {
   const [isActive, setIsActive] = useState(true);
   const [isStopped, setIsStopped] = useState(false);
   // Send user id and time to backend and it will start counting,
@@ -23,42 +24,57 @@ const HomeRiding = ({location, setIsRiding}) => {
   //
   // get amont from backend
   const amount = 0.0;
+  const his = useHistory();
+  const handleOnStopRide = () => {
+    fetch('http://localhost:5000/home/endRide', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        userId: userId,
+        vehicleId: vhNo,
+        startLocation: location,
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        if (res['endLocation'] == 'Noob') {
+          var balance = window.confirm(
+            'Insufficient Balance.\nGo to Add Money?'
+          );
+          if (balance) {
+            his.push('/account/balance');
+          } else {
+            alert('come back to riding');
+          }
+        } else {
+          var history = window.confirm(
+            `Paid Rs.${res['price']}\nGo to Ride History?`
+          );
+          if (history) {
+            his.push('/history');
+          } else {
+            his.push('/home/start');
+          }
+          setIsRiding(false);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const stopRideOnlyIfNear = () => {};
   return (
     <>
       <DetailsContainer>
-        {!isStopped ? (
-          <>
-            <TextContainer>Riding from: {location[0]}</TextContainer>
-            <Timer isActive={isActive} setIsActive={setIsActive} />
-            <Button
-              onClick={() => {
-                setIsActive(false);
-                setIsStopped(true);
-              }}
-            >
-              Stop Ride
-            </Button>
-          </>
-        ) : (
-          <>
-            <TextContainer>From: {location[0]}</TextContainer>
-            <TextContainer>To: "End Loc (From backend)"</TextContainer>
-            <ButtonWrapper colorChange="#01bf71">
-              <ButtonRoute
-                to={payment}
-                onClick={() => {
-                  setIsActive(true);
-                  setIsRiding(false);
-                  setIsStopped(false);
-                }}
-              >
-                Pay Rs.{amount}
-              </ButtonRoute>
-            </ButtonWrapper>
-          </>
-        )}
+        <>
+          <TextContainer>Riding from: {location[0]}</TextContainer>
+          <Button
+            onClick={() => {
+              handleOnStopRide();
+            }}
+          >
+            Stop Ride and Pay
+          </Button>
+        </>
         {/* <BackButtonWrapper>
           <ButtonRoute to={homeStart} mobFontSize="14px" fontSize="10px">
             Go Back

@@ -1,25 +1,48 @@
 import React from 'react';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {BalancePopup} from './BalancePopup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useHistory} from 'react-router';
 
-function Balance({balance, setBalance}) {
+function Balance({
+  balance,
+  setBalance,
+  profileDetails,
+  userId,
+  getBal,
+  username,
+}) {
   const [bal, setbalance] = useState(parseInt(balance));
   const [buttonpopup, setbuttonpopup] = useState(false);
   const [addmoney, setaddmoney] = useState('');
+
+  useEffect(() => {
+    getBal();
+  }, []);
 
   const addMoney = (e) => {
     setaddmoney(e.target.value);
     //console.log(addmoney)
   };
 
+  const handleAddMoney = (money) => {
+    fetch('http://localhost:5000/wallet/addMoney', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({userId: userId, money: money}),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        setbalance(res['balance']);
+        setBalance(res['balance']);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const addedMoney = (e) => {
     setbuttonpopup(false);
-    const tempBalance = parseInt(bal) + parseInt(addmoney);
-    setbalance(tempBalance);
     setaddmoney('');
-    setBalance(tempBalance);
+    handleAddMoney(addmoney);
   };
 
   const history = useHistory();
@@ -34,7 +57,7 @@ function Balance({balance, setBalance}) {
       </div>
       <div className="border-bottom"></div>
       <div className="w-75 container mt-3">
-        <h3>Welcome to your Wallet, raghuveer</h3>
+        <h3>Welcome to your Wallet, {username}</h3>
       </div>
       <div class="card w-75 container my-5">
         <div class="card-body">
@@ -53,7 +76,12 @@ function Balance({balance, setBalance}) {
         </div>
         <BalancePopup trigger={buttonpopup}>
           <h1>Add money</h1>
-          <input type="number" value={addmoney} onChange={addMoney} />
+          <input
+            type="number"
+            className="beerMistakeCorrecting"
+            value={addmoney}
+            onChange={addMoney}
+          />
           <div className="my-3">
             <button
               type="button"

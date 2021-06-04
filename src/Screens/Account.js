@@ -17,11 +17,6 @@ function Account({profiledata}) {
   const [username, setusername] = useState(profiledata.username);
   const [phnumber, setphnumber] = useState(profiledata.phoneNo);
   const [licenseNo, setLicenseNo] = useState(profiledata.licenseNo);
-  const [balancePopup, setBalancePopup] = useState(false);
-
-  const onViewDLClick = () => {
-    setBalancePopup(!balancePopup);
-  };
 
   const history = useHistory();
   const goToEditProfile = () => {
@@ -33,7 +28,7 @@ function Account({profiledata}) {
 
   return (
     <>
-      <div style={{marginTop: 50}}>
+      <div style={{marginTop: 30}}>
         <div className="container">
           <h1 className="d-flex justify-content-center mb-2">Account</h1>
           <div className="border-bottom border-danger border-3 mb-3"></div>
@@ -74,55 +69,6 @@ function Account({profiledata}) {
                 <Form.Label>License No</Form.Label>
                 <Form.Text>{licenseNo}</Form.Text>
               </Form.Group>
-
-              <Form.Group
-                as={Row}
-                className="my-3"
-                controlId="formHorizontalPassword"
-              >
-                <Form.Label
-                  className="my-1 mr-2"
-                  htmlFor="inlineFormCustomSelectPref"
-                >
-                  Driving Licence
-                </Form.Label>
-                <Form.Text>
-                  <img
-                    style={{marginRight: 20}}
-                    src={logo}
-                    width={100}
-                    class="img-thumbnail"
-                    alt="..."
-                  />
-                  <Button
-                    className="mybutton"
-                    style={{width: 'auto'}}
-                    onClick={() => onViewDLClick()}
-                  >
-                    View Driving License
-                  </Button>
-                </Form.Text>
-              </Form.Group>
-              <BalancePopup trigger={balancePopup}>
-                <h1>Your Driving License</h1>
-                <div className="my-3">
-                  <img
-                    style={{marginRight: 50}}
-                    src={logo}
-                    width={400}
-                    class="img-thumbnail"
-                    alt="..."
-                  />
-                  <button
-                    type="button"
-                    class="btn btn-danger mx-2"
-                    onClick={() => onViewDLClick()}
-                    style={{width: 100}}
-                  >
-                    Close
-                  </button>
-                </div>
-              </BalancePopup>
 
               {/* <div>
               <Form.Label
