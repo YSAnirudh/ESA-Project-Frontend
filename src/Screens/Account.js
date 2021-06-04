@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Form, Row, Col, Button} from 'react-bootstrap';
 import logo from '../Assets/DL.png';
@@ -12,11 +12,15 @@ import {
 } from './Elements/AccountElem';
 import {useHistory} from 'react-router';
 
-function Account({profiledata}) {
+function Account({profiledata, handleGetProfileData, userId}) {
   const [email, setemail] = useState(profiledata.email);
   const [username, setusername] = useState(profiledata.username);
   const [phnumber, setphnumber] = useState(profiledata.phoneNo);
   const [licenseNo, setLicenseNo] = useState(profiledata.licenseNo);
+
+  // useEffect(() => {
+  //   handleGetProfileData();
+  // }, []);
 
   const history = useHistory();
   const goToEditProfile = () => {

@@ -28,11 +28,12 @@ import Payment from './Payment';
 import HomeStart from './HomeComponents/HomeStart';
 import HomeRide from './HomeComponents/HomeRide';
 import HomeRiding from './HomeComponents/HomeRiding';
+import AfterLogin from '../Components/layout/afterlogin';
 const geolib = require('geolib');
 
-function Start({isOpen, updateIsOpen, isLogin}) {
-  const [userId, setUserId] = useState('95ff6bf5-a85b-4260-a503-ce983195ed93');
-  const [isMapOpen, setIsMapOpen] = useState(false);
+function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
+  const [userId, setUserId] = useState(localStorage.getItem('userId'));
+  const [isMapOpen, setIsMapOpen] = useState(true);
   const toggle = () => {
     setIsMapOpen(!isMapOpen);
   };
@@ -69,7 +70,26 @@ function Start({isOpen, updateIsOpen, isLogin}) {
       phoneNo: phone,
       licenseNo: lno,
     });
+    handleEditProfile(user, emailAdd, phone, lno);
     // backend post BIGNOO
+  };
+  const handleEditProfile = (userN, ema, phno, lno) => {
+    fetch('http://localhost:5000/account/update', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        userId: userId,
+        username: userN,
+        email: ema,
+        phoneNo: phno,
+        licenseNo: lno,
+      }),
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   const [balance, setBalance] = useState(0);
@@ -200,7 +220,16 @@ function Start({isOpen, updateIsOpen, isLogin}) {
       />
       <NavBar toggle={updateIsOpen} isLogin={isLogin} isRiding={isRiding} />
       <Switch>
-        <Route exact path={homeAfterLogin} />
+        <Route
+          exact
+          path={homeAfterLogin}
+          component={() => (
+            <AfterLogin
+              username={profiledata.username}
+              setIsLogin={setIsLogin}
+            />
+          )}
+        />
         <Route
           exact
           path={login}
@@ -276,7 +305,10 @@ function Start({isOpen, updateIsOpen, isLogin}) {
           path={history}
           component={() => (
             <>
-              <History info={bookingHistory} />
+              <History
+                info={bookingHistory}
+                handleGetHistory={handleGetHistory}
+              />
             </>
           )}
         />
@@ -284,7 +316,12 @@ function Start({isOpen, updateIsOpen, isLogin}) {
           exact
           path={account}
           component={() => (
-            <Account profiledata={profiledata} setProfileData={setProfData} />
+            <Account
+              profiledata={profiledata}
+              setProfileData={setProfData}
+              handleGetProfileData={handleGetProfileData}
+              userId={userId}
+            />
           )}
         />
         <Route
@@ -294,6 +331,7 @@ function Start({isOpen, updateIsOpen, isLogin}) {
             <EditAccount
               profiledata={profiledata}
               setProfileData={setProfData}
+              userId={userId}
             />
           )}
         />

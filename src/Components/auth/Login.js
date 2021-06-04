@@ -1,39 +1,21 @@
 import React, {Component} from 'react';
-import {Link, useHistory} from 'react-router-dom';
-import PropTypes from 'prop-types';
-import {connect} from 'react-redux';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {loginUser} from '../../actions/authActions';
-import classnames from 'classnames';
-import {homeAfterLogin} from '../../Constants/RouteInfo';
+import {Link} from 'react-router-dom';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+//import {homeAfterLogin} from '../../Constants/RouteInfo';
+import {Container, Row, Col} from 'react-bootstrap';
+import {Form, Button, Image} from 'react-bootstrap';
+const {loginUser} = require('../../actions/loginuser');
+const {validateLoginInput} = require('../../validation/loginValidation');
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      phonenumber: '',
+      phoneNo: '',
       password: '',
       errors: {},
     };
-  }
-
-  componentDidMount() {
-    // If logged in and user navigates to Login page, should redirect them to dashboard
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.auth.isAuthenticated) {
-      this.props.history.push('/dashboard');
-    }
-
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors,
-      });
-    }
   }
 
   onChange = (e) => {
@@ -44,98 +26,95 @@ class Login extends Component {
     e.preventDefault();
 
     const userData = {
-      phonenumber: this.state.phonenumber,
+      phoneNo: this.state.phoneNo,
       password: this.state.password,
     };
-
-    this.props.updateIsLogin();
-    this.props.history.push('/home');
+    var validate = validateLoginInput(userData);
+    console.log(validate);
+    if (validate.isValid) {
+      loginUser(
+        userData,
+        this.props,
+        this.props.history,
+        this.props.setIsLogin
+      );
+    } else {
+      alert(validate.message);
+    }
+    // loginUser(userData,this.props,this.props.history)
   };
 
   render() {
-    const {errors} = this.state;
     return (
-      <div className="container">
-        <div className="row">
-          <div className="col s8 offset-s2">
-            <Link to="/" className="btn-flat waves-effect">
-              <i className="material-icons left">keyboard_backspace</i> Back to
-              home
-            </Link>
-            <div className="col s12" style={{paddingLeft: '11.250px'}}>
-              <h4>
-                <b>Login</b> below
-              </h4>
-              <p className="grey-text text-darken-1">
-                Don't have an account? <Link to="/register">Register</Link>
-              </p>
-            </div>
-            <form noValidate onSubmit={this.onSubmit}>
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.phonenumber}
-                  error={errors.phonenumber}
-                  id="phonenumber"
-                  type="tel"
-                  className={classnames('', {
-                    invalid: errors.phonenumber || errors.phonenumbernotfound,
-                  })}
-                />
-                <label htmlFor="phonenumber">phonenumber</label>
-                <span className="red-text">
-                  {errors.phonenumber}
-                  {errors.phonenumbernotfound}
-                </span>
-              </div>
-              <div className="input-field col s12">
-                <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                  id="password"
-                  type="password"
-                  className={classnames('', {
-                    invalid: errors.password || errors.passwordincorrect,
-                  })}
-                />
-                <label htmlFor="password">Password</label>
-                <span className="red-text">
-                  {errors.password}
-                  {errors.passwordincorrect}
-                </span>
-              </div>
-              <div className="col s12" style={{paddingLeft: '11.250px'}}>
-                <button
-                  style={{
-                    width: '150px',
-                    borderRadius: '3px',
-                    letterSpacing: '1.5px',
-                    marginTop: '1rem',
-                  }}
-                  type="submit"
-                  className="btn btn-large waves-effect waves-light hoverable blue accent-3"
-                >
-                  Login
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+      // <Container>
+      //   <Row>
+
+      //       <Col xs={{size: 8, offset: 2 }}>
+
+      //       <Link to="/" class="btn-flat waves-effect">
+      //         <i class="material-icons left">keyboard_backspace</i> Back to
+      //         home
+      //       </Link>
+      //       <Col xs="12" style={{paddingLeft: '11.250px'}}>
+      //         <h4>
+      //           <b>Login</b> below
+      //         </h4>
+      //         <p class="grey-text text-darken-1">
+      //           Don't have an account? <Link to="/register">Register</Link>
+      //         </p>
+      //       </Col>
+      <Row>
+        <Col xl={6}>
+          <Form
+            style={{
+              width: '50%',
+              height: '50%',
+              marginLeft: '10%',
+              marginTop: '10%',
+            }}
+          >
+            <Form.Group>
+              <Form.Label>Enter your PhoneNumber</Form.Label>
+              <Form.Control
+                type="tel"
+                placeholder="Enter your Phonenumber"
+                onChange={this.onChange}
+                value={this.state.phoneNo}
+                id="phoneNo"
+              />
+            </Form.Group>
+            <br />
+            <Form.Group>
+              <Form.Label>Enter your password</Form.Label>
+              <Form.Control
+                type="password"
+                placeholder="Enter your password"
+                onChange={this.onChange}
+                value={this.state.password}
+                id="password"
+              />
+            </Form.Group>
+            <br />
+            <Button type="submit" onClick={this.onSubmit}>
+              Submit
+            </Button>
+          </Form>
+        </Col>
+        <Col xl={6}>
+          <Image
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRP3e-HQRp8k0qWIH0myLVZD9fU5qYO5ZMIQ-XfIcruNPX-SWtCeh4y_5vKbi9JXq1c98&usqp=CAU"
+            thumbnail
+            style={{
+              border: 'none',
+              width: '80%',
+              marginLeft: '10%',
+              marginTop: '10%',
+            }}
+          />
+        </Col>
+      </Row>
     );
   }
 }
 
-Login.propTypes = {
-  loginUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-  auth: state.auth,
-  errors: state.errors,
-});
-
-export default connect(mapStateToProps, {loginUser})(Login);
+export default Login;

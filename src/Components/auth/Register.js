@@ -1,58 +1,60 @@
 import React, { Component } from "react";
-import { Link, withRouter } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { registerUser } from "../../actions/authActions";
-import classnames from "classnames";
-
+import { Link } from "react-router-dom";
+const {registerUser}  = require('../../actions/regesiter')
+const {validateRegisterInput} = require('../../validation/registerValidation')
 
 class Register extends Component {
   constructor() {
     super();
     this.state = {
-      name: "",
-      phonenumber:"",
+      username: "",
+      phoneNo:"",
       email: "",
       password: "",
       password2: "",
+      licenseNo : "",
       errors: {}
     };
   }
 
-  componentDidMount() {
-    // If logged in and user navigates to Register page, should redirect them to dashboard
-    if (this.props.auth.isAuthenticated) {
-      this.props.history.push("/dashboard");
-    }
-  }
+  
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({
-        errors: nextProps.errors
-      });
-    }
-  }
-  fileChangedHandler = (event) => {
-    const file = event.target.files[0]
-    console.log(file)
-  }
+  
+  
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
 
   onSubmit = e => {
+    
     e.preventDefault();
-
-    const newUser = {
-      name: this.state.name,
-      phonenumber:this.state.phonenumber,
+    const validateUser = {
+      username: this.state.username,
       email: this.state.email,
       password: this.state.password,
-      password2: this.state.password2
+      password2:this.state.password2,
+      phoneNo:this.state.phoneNo,
+      licenseNo:this.state.licenseNo,
+     
     };
-
-    this.props.registerUser(newUser, this.props.history);
+    console.log("data:",validateUser)
+    var validate = validateRegisterInput(validateUser)
+    console.log(validate)
+    if(validate.isValid){
+      const newUser = {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+        phoneNo:this.state.phoneNo,
+        licenseNo:this.state.licenseNo
+      };
+  
+      registerUser(newUser, this.props.history); 
+    }else{
+      alert(validate.message);
+    }
+    
+    
   };
 
   render() {
@@ -85,30 +87,38 @@ class Register extends Component {
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.name}
-                  error={errors.name}
-                  id="name"
+                  value={this.state.username}
+                  error={errors.username}
+                  id="username"
                   type="text"
-                  className={classnames("", {
-                    invalid: errors.name
-                  })}
+                  
                 />
                 <label htmlFor="name">Name</label>
-                <span className="red-text">{errors.name}</span>
+                <span style={{color: "red"}}>{errors.username}</span>
               </div>
               <div className="input-field col s12">
                 <input
                   onChange={this.onChange}
-                  value={this.state.phonenumber}
-                  error={errors.phonenumber}
-                  id="phonenumber"
+                  value={this.state.phoneNo}
+                  error={errors.phoneNo}
+                  id="phoneNo"
                   type="tel"
-                  className={classnames("", {
-                    invalid: errors.phonenumber
-                  })}
+                 
                 />
-                <label htmlFor="phonenumber">Phonenumber</label>
-                <span className="red-text">{errors.phonenumber}</span>
+                <label htmlFor="phoneNo">Phonenumber</label>
+                
+              </div>
+              <div className="input-field col s12">
+                <input
+                  onChange={this.onChange}
+                  value={this.state.licenseNo}
+                  error={errors.licenseNo}
+                  id="licenseNo"
+                  type="text"
+                  
+                />
+                <label htmlFor="licenseNo">licenseNumber</label>
+               
               </div>
               <div className="input-field col s12">
                 <input
@@ -117,12 +127,10 @@ class Register extends Component {
                   error={errors.email}
                   id="email"
                   type="email"
-                  className={classnames("", {
-                    invalid: errors.email
-                  })}
+                  
                 />
                 <label htmlFor="email">Email</label>
-                <span className="red-text">{errors.email}</span>
+                
               </div>
               <div className="input-field col s12">
                 <input
@@ -131,12 +139,9 @@ class Register extends Component {
                   error={errors.password}
                   id="password"
                   type="password"
-                  className={classnames("", {
-                    invalid: errors.password
-                  })}
                 />
                 <label htmlFor="password">Password</label>
-                <span className="red-text">{errors.password}</span>
+                
               </div>
               <div className="input-field col s12">
                 <input
@@ -145,12 +150,10 @@ class Register extends Component {
                   error={errors.password2}
                   id="password2"
                   type="password"
-                  className={classnames("", {
-                    invalid: errors.password2
-                  })}
+                 
                 />
                 <label htmlFor="password2">Confirm Password</label>
-                <span className="red-text">{errors.password2}</span>
+                
               </div>
               
               <div className="col s12" style={{ paddingLeft: "11.250px" }}>
@@ -172,10 +175,7 @@ class Register extends Component {
           </div>
           <div className="col-12 col-md-4">
         <form>
-        <div className = "input-field col s12">
-                  <input type="file" onChange={this.fileChangedHandler}/>
-                  
-              </div>
+        
         </form>
         </div>
 
@@ -187,18 +187,4 @@ class Register extends Component {
   }
 }
 
-Register.propTypes = {
-  registerUser: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};
-
-const mapStateToProps = state => ({
-  auth: state.auth,
-  errors: state.errors
-});
-
-export default connect(
-  mapStateToProps,
-  { registerUser }
-)(withRouter(Register));
+export default Register

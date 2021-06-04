@@ -8,7 +8,6 @@ export const homeRide = '/home/ride';
 export const homeRiding = '/home/riding';
 export const login = '/login';
 export const register = '/register';
-export const dashboard = '/dashboard';
 export const editProfile = '/account/edit';
 export const accountBalance = '/account/balance';
 

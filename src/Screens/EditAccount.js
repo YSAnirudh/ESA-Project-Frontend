@@ -8,7 +8,7 @@ import logo from '../Assets/DL.png';
 import '../CSS/Account.css';
 import {useHistory} from 'react-router';
 
-export default function EditAccount({profiledata, setProfileData}) {
+export default function EditAccount({profiledata, setProfileData, userId}) {
   const [email, setemail] = useState(profiledata.email);
   const [username, setusername] = useState(profiledata.username);
   const [phnumber, setphnumber] = useState(profiledata.phoneNo);
