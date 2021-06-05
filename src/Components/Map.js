@@ -1,6 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React from 'react';
 
-import {LoadScript, GoogleMap} from '@react-google-maps/api';
 import {ButtonWrapper, MapElements} from './MapElem';
 import {IoIosArrowDown} from 'react-icons/io';
 import L, {latLng} from 'leaflet';
@@ -8,10 +7,8 @@ import 'leaflet/dist/leaflet.css';
 import {MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import {Button} from './MapElem';
 function Maps({isMapVisible, toggleMap, locations, setLocation, userLoc}) {
-  //function handleApiLoaded(map, maps) {}
   var locs = locations;
 
-  // console.log(locs);
   const pin = (location) => {
     return (
       <>
@@ -88,7 +85,6 @@ function Maps({isMapVisible, toggleMap, locations, setLocation, userLoc}) {
 }
 
 export default Maps;
-//bootstrapURLKeys={{key: 'AIzaSyB5-a_N4wZHXxPEFn4g7AzrDmmNIyQeMPM'}}
 const mapStyles = {
   height: 'calc(100vh - 60px)',
   width: '100%',

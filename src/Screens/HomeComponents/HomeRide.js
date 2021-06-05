@@ -1,10 +1,5 @@
-import React, {useState} from 'react';
-import {
-  homeRide,
-  homeRiding,
-  homeStart,
-  payment,
-} from '../../Constants/RouteInfo';
+import React, {useEffect, useState} from 'react';
+import {homeRide, homeRiding, homeStart} from '../../Constants/RouteInfo';
 import {
   BackButtonWrapper,
   ButtonBack,
@@ -17,13 +12,10 @@ import {
   TextInputContainer,
   SuggestionsList,
   SuggestionsItem,
-  DropButton,
 } from '../Elements/HomeElem';
 import {FaAngleDown} from 'react-icons/fa';
 
 const HomeRide = ({
-  toggleHomeStart,
-  toggleHomeRide,
   location,
   setIsRiding,
   vehicles,
@@ -33,9 +25,11 @@ const HomeRide = ({
   userId,
 }) => {
   const [text, setText] = useState('');
-  const [OTP, setOTP] = useState(
-    '0' /*Math.floor(Math.random() * 900000 + 100000)*/
-  );
+  const [OTP, setOTP] = useState('0');
+  const changeOTP = () => {
+    setOTP(Math.floor(Math.random() * 900000 + 100000).toString());
+  };
+
   // POST the locations info and get back list of vehicles
 
   const onTextChange = (e) => {
@@ -50,7 +44,7 @@ const HomeRide = ({
   };
   const showVehicles = () => {
     if (openDraw) {
-      return vehicles.length != 0 ? (
+      return vehicles.length !== 0 ? (
         <SuggestionsList>
           {vehicles.sort().map((vhNo) => (
             <SuggestionsItem onClick={() => vehicleSelected(vhNo)}>
@@ -69,6 +63,11 @@ const HomeRide = ({
   const vehicleSelected = (value) => {
     setVhNo(value);
     setOpenDraw(false);
+  };
+
+  const giveAlert = () => {
+    changeOTP();
+    alert(`OTP: ${OTP}`);
   };
 
   // const [costStr, setCostStr] = useState('');
@@ -91,7 +90,7 @@ const HomeRide = ({
       <TextContainer fontSize={10}>Your Ride</TextContainer>
       <TextContainer fontSize={10}>From: {location[0]}</TextContainer>
       <TextContainer fontSize={10}>Cost: {costStr}</TextContainer>
-      {location[0] != '' ? (
+      {location[0] !== '' ? (
         <TextContainer fontSize={10}>OTP Sent to : {phoneNo}</TextContainer>
       ) : (
         <TextContainer fontSize={10}>
@@ -99,7 +98,9 @@ const HomeRide = ({
         </TextContainer>
       )}
       <TextInputContainer width="auto">
-        <ButtonText width={30}>Vehicle No. {vhNo != -1 ? vhNo : ''}</ButtonText>
+        <ButtonText width={30}>
+          Vehicle No. {vhNo !== -1 ? vhNo : ''}
+        </ButtonText>
         <FaAngleDown
           cursor="pointer"
           size={20}
@@ -124,13 +125,13 @@ const HomeRide = ({
       </TextInputContainer>
       <ButtonBack
         onClick={() => {
-          alert(`OTP: ${OTP}`);
+          giveAlert();
         }}
       >
         {}
         Resend OTP
       </ButtonBack>
-      {location[0] == '' ? (
+      {location[0] === '' ? (
         <ButtonWrapper colorChange="#01bf71">
           <ButtonRoute
             to={homeRide}
@@ -141,8 +142,8 @@ const HomeRide = ({
             Start Ride
           </ButtonRoute>
         </ButtonWrapper>
-      ) : OTP == text ? (
-        vhNo != -1 ? (
+      ) : OTP === text ? (
+        vhNo !== -1 ? (
           <ButtonWrapper colorChange="#01bf71">
             <ButtonRoute
               to={homeRiding}

@@ -61,9 +61,6 @@ const SideBar = ({isOpen, toggle, isLogin, isRiding}) => {
               Account
             </SideBarLink>
           </SideBarMenu>
-          <SideBarBtnWrap>
-            <SideBarRoute to={root}>Log Out</SideBarRoute>
-          </SideBarBtnWrap>
         </SideBarWrapper>
       </SideBarContainer>
     );

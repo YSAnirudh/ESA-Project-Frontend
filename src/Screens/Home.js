@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
 import {PageContainer} from './Elements/HomeElem';
 import Maps from '../Components/Map';
-import {homeStart, homeRide, payment} from '../Constants/RouteInfo';
 import BackVid from '../Components/BackVideo';
 import HomeStart from './HomeComponents/HomeStart';
 import HomeRide from './HomeComponents/HomeRide';
-import {MapElements} from '../Components/MapElem';
 
 function Home({
   path,

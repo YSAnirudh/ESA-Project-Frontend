@@ -1,15 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {Form, Row, Col, Button} from 'react-bootstrap';
-import logo from '../Assets/DL.png';
-import {BalancePopup} from './BalancePopup';
+import {Form, Row, Button} from 'react-bootstrap';
 import '../CSS/Account.css';
-import {
-  DetailsContainer,
-  TextContainer,
-  ButtonWrapper,
-  AccountHeading,
-} from './Elements/AccountElem';
+import {ButtonWrapper} from './Elements/AccountElem';
 import {useHistory} from 'react-router';
 
 function Account({profiledata, handleGetProfileData, userId}) {
@@ -17,10 +10,6 @@ function Account({profiledata, handleGetProfileData, userId}) {
   const [username, setusername] = useState(profiledata.username);
   const [phnumber, setphnumber] = useState(profiledata.phoneNo);
   const [licenseNo, setLicenseNo] = useState(profiledata.licenseNo);
-
-  // useEffect(() => {
-  //   handleGetProfileData();
-  // }, []);
 
   const history = useHistory();
   const goToEditProfile = () => {
@@ -73,27 +62,6 @@ function Account({profiledata, handleGetProfileData, userId}) {
                 <Form.Label>License No</Form.Label>
                 <Form.Text>{licenseNo}</Form.Text>
               </Form.Group>
-
-              {/* <div>
-              <Form.Label
-                column
-                sm={2}
-                className="my-1 mr-2"
-                htmlFor="inlineFormCustomSelectPref"
-              >
-                Location
-              </Form.Label>
-              <Form.Control
-                as="select"
-                className="my-1 mr-sm-2"
-                id="inlineFormCustomSelectPref"
-                onChange={locationChange}
-                custom
-              >
-                <option value="India">India</option>
-                <option value="Dummy">Dummy</option>
-              </Form.Control>
-            </div> */}
 
               <Form.Group as={Row} className="my-3">
                 <ButtonWrapper>

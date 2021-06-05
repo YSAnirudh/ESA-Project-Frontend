@@ -13,23 +13,19 @@ import {
   history,
   account,
   homeRide,
-  payment,
   homeRiding,
   homeAfterLogin,
   login,
   accountBalance,
   editProfile,
-  backendEndpoint,
 } from '../Constants/RouteInfo';
 import {PageContainer} from './Elements/HomeElem';
 import Maps from '../Components/Map';
 import BackVid from '../Components/BackVideo';
-import Payment from './Payment';
 import HomeStart from './HomeComponents/HomeStart';
 import HomeRide from './HomeComponents/HomeRide';
 import HomeRiding from './HomeComponents/HomeRiding';
 import AfterLogin from '../Components/layout/afterlogin';
-const geolib = require('geolib');
 
 function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
   const [userId, setUserId] = useState(localStorage.getItem('userId'));
@@ -39,7 +35,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
   };
 
   const [locations, setLocations] = useState([]);
-  const handleGetLocations = () => {
+  const handleGetLocations = React.useCallback(() => {
     fetch('http://localhost:5000/home/getRide', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
@@ -48,10 +44,10 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
       .then((res) => {
         setLocations(res.Locations);
       });
-  };
+  }, []);
 
   const [profiledata, setProfileData] = useState({});
-  const handleGetProfileData = () => {
+  const handleGetProfileData = React.useCallback(() => {
     fetch('http://localhost:5000/details/account', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -62,7 +58,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
         setProfileData(res);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
   const setProfData = (user, phone, emailAdd, lno) => {
     setProfileData({
       username: user,
@@ -70,10 +66,9 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
       phoneNo: phone,
       licenseNo: lno,
     });
-    handleEditProfile(user, emailAdd, phone, lno);
     // backend post BIGNOO
   };
-  const handleEditProfile = (userN, ema, phno, lno) => {
+  const handleEditProfile = React.useCallback((userN, ema, phno, lno) => {
     fetch('http://localhost:5000/account/update', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -90,10 +85,10 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
         console.log(res);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
 
   const [balance, setBalance] = useState(0);
-  const handleGetBalance = () => {
+  const handleGetBalance = React.useCallback(() => {
     fetch('http://localhost:5000/wallet/balance', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -104,14 +99,14 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
         setBalance(res.balance);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
   const setBal = (bal) => {
     setBalance(bal);
     // BIGNOO
   };
 
   const [bookingHistory, setBookingHistory] = useState([]);
-  const handleGetHistory = () => {
+  const handleGetHistory = React.useCallback(() => {
     fetch('http://localhost:5000/details/history', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -123,10 +118,10 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
         setBookingHistory(res);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
 
   const [userCache, setUserCache] = useState([]);
-  const handleGetUserCache = () => {
+  const handleGetUserCache = React.useCallback(() => {
     fetch('http://localhost:5000/home/getCache', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -138,11 +133,11 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
         setUserCache(res);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
   const [location, setLocation] = useState(['', [0, 0]]);
   const [vehicles, setVehicles] = useState([]);
   const [costStr, setCostStr] = useState('');
-  const handleGetVehicles = (locat) => {
+  const handleGetVehicles = React.useCallback((locat) => {
     fetch('http://localhost:5000/bike/getVehicles', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -162,38 +157,17 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
         setCostStr(veh['cost']);
       })
       .catch((err) => console.log(err));
-  };
+  }, []);
 
   const [userLoc, setUserLoc] = useState(userLoc);
   const successHandler = (position) => {
     setUserLoc([position.coords.latitude, position.coords.longitude]);
   };
   const errorHandler = (error) => console.error(error.message);
-  const getLocation = (locats) => {
+  const getLocation = () => {
     if (!userLoc) {
       navigator.geolocation.getCurrentPosition(successHandler, errorHandler);
     }
-  };
-
-  const [nearestLocation, setNearestLocation] = useState('');
-  const calcNearestLocation = (loca, locats) => {
-    var min = 100000000000.0;
-    var loc = '';
-    for (var i = 0; i < locats.length; i++) {
-      var dist = geolib.getDistance(
-        {latitude: locats[i][1][0], longitude: locats[i][1][1]},
-        {latitude: loca[0], longitude: loca[1]}
-      );
-      if (dist < min) {
-        loc = locats[i][0];
-        min = dist;
-      } else {
-        min = min;
-      }
-      console.log(loc);
-    }
-    setNearestLocation(loc);
-    console.log(loc);
   };
 
   const [vhNo, setVhNo] = useState(-1);
@@ -205,10 +179,17 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
     handleGetBalance();
     handleGetHistory();
     handleGetUserCache();
-  }, []);
+    // calcNearestLocation(userLoc, location);
+  }, [
+    handleGetLocations,
+    handleGetProfileData,
+    handleGetBalance,
+    handleGetUserCache,
+    handleGetHistory,
+  ]);
 
   const [isRiding, setIsRiding] = useState(
-    userCache.length == 0 ? false : true
+    userCache.length === 0 ? false : true
   );
   return (
     <>
@@ -259,7 +240,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
                     locations={locations}
                     setLocation={setLocation}
                     location={location}
-                    nearestLocation={nearestLocation}
+                    userLoc={userLoc}
                     getVehicles={handleGetVehicles}
                   />
                 </>
@@ -296,6 +277,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
                 setIsRiding={setIsRiding}
                 userId={userId}
                 vhNo={vhNo}
+                handleGetHistory={handleGetHistory}
               />
             </PageContainer>
           )}
@@ -331,7 +313,9 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
             <EditAccount
               profiledata={profiledata}
               setProfileData={setProfData}
+              handleEditProfile={handleEditProfile}
               userId={userId}
+              handleGetProfileData={handleGetProfileData}
             />
           )}
         />
@@ -348,7 +332,6 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
             />
           )}
         />
-        <Route exact path={payment} component={() => <Payment />} />
         <Route component={Error} />
       </Switch>
     </>

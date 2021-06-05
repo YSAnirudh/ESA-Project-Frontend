@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-//import {homeAfterLogin} from '../../Constants/RouteInfo';
-import {Container, Row, Col} from 'react-bootstrap';
+import {Row, Col} from 'react-bootstrap';
 import {Form, Button, Image} from 'react-bootstrap';
 const {loginUser} = require('../../actions/loginuser');
 const {validateLoginInput} = require('../../validation/loginValidation');
@@ -41,28 +39,10 @@ class Login extends Component {
     } else {
       alert(validate.message);
     }
-    // loginUser(userData,this.props,this.props.history)
   };
 
   render() {
     return (
-      // <Container>
-      //   <Row>
-
-      //       <Col xs={{size: 8, offset: 2 }}>
-
-      //       <Link to="/" class="btn-flat waves-effect">
-      //         <i class="material-icons left">keyboard_backspace</i> Back to
-      //         home
-      //       </Link>
-      //       <Col xs="12" style={{paddingLeft: '11.250px'}}>
-      //         <h4>
-      //           <b>Login</b> below
-      //         </h4>
-      //         <p class="grey-text text-darken-1">
-      //           Don't have an account? <Link to="/register">Register</Link>
-      //         </p>
-      //       </Col>
       <Row>
         <Col xl={6}>
           <Form

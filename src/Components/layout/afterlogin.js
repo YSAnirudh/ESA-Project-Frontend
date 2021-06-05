@@ -14,7 +14,7 @@ import {
 import video1 from '../../Videos/video1.mp4';
 import {useHistory} from 'react-router-dom';
 
-const AfterLogin = ({username, updateIsLogin, setIsLogin}) => {
+const AfterLogin = ({username, setIsLogin}) => {
   const [hover, setHover] = useState(false);
   const onHover = () => {
     setHover(!hover);
@@ -43,7 +43,6 @@ const AfterLogin = ({username, updateIsLogin, setIsLogin}) => {
           <Button
             onClick={() => {
               localStorage.removeItem('userId');
-              localStorage.setItem('isLogin', 'true');
               setIsLogin(true);
               push('/');
             }}

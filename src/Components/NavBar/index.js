@@ -29,7 +29,7 @@ function NavBar({toggle, isLogin, setHomeStart, isRiding}) {
         <Nav>
           <NavContainter>
             <NavLogo exact activeClassName="activeClass" to={root}>
-              AppName
+              Jeldi
             </NavLogo>
             <MobileIcon onClick={toggle}>
               <FaBars />
@@ -50,14 +50,14 @@ function NavBar({toggle, isLogin, setHomeStart, isRiding}) {
       <Nav>
         <NavContainter>
           <NavLogo exact activeClassName="activeClass" to={homeAfterLogin}>
-            AppName
+            Jeldi
           </NavLogo>
           <MobileIcon onClick={toggle}>
             <FaBars />
           </MobileIcon>
           <NavMenu>
             <NavItem>
-              <NavLinks to={isRiding ? homeRiding : homeStart}>Home</NavLinks>
+              <NavLinks to={isRiding ? homeRiding : homeStart}>Start</NavLinks>
             </NavItem>
             <NavItem>
               <NavLinks to={history}>History</NavLinks>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {homeRide, homeStart} from '../../Constants/RouteInfo';
 import {
   ButtonRoute,
@@ -13,6 +13,7 @@ import {
   SuggestionsItem,
 } from '../Elements/HomeElem';
 import {FaMapMarked} from 'react-icons/fa';
+const geolib = require('geolib');
 // import Maps from '../../Components/Map';
 // import {
 //   MapElements,
@@ -20,17 +21,41 @@ import {FaMapMarked} from 'react-icons/fa';
 // } from '../../Components/MapElem';
 // import {IoIosArrowDown} from 'react-icons/io';
 const HomeStart = ({
-  isMapVisible,
   toggleMap,
   locations,
   setLocation,
   location,
-  nearestLocation,
+  userLoc,
   getVehicles,
 }) => {
+  useEffect(() => {
+    calcNearestLocation(userLoc, locations);
+  }, []);
+
   const [locat, setLocat] = useState(location);
   const [suggestions, setSuggestions] = useState([]);
-  const [text, setText] = useState(locat[0] != '' ? locat[0] : '');
+  const [text, setText] = useState(locat[0] !== '' ? locat[0] : '');
+  const [nearestLocation, setNearestLocation] = useState('');
+  const calcNearestLocation = (loca, locats) => {
+    var min = 100000000000.0;
+    var loc = '';
+    console.log(locats);
+    for (var i = 0; i < locats.length; i++) {
+      var dist = geolib.getDistance(
+        {latitude: locats[i][1][0], longitude: locats[i][1][1]},
+        {latitude: loca[0], longitude: loca[1]}
+      );
+      if (dist < min) {
+        loc = locats[i][0];
+        min = dist;
+      } else {
+        min = min;
+      }
+      console.log(loc);
+    }
+    setNearestLocation(loc);
+    console.log(loc);
+  };
 
   const onTextChange = (e) => {
     let suggestions = [];
@@ -71,9 +96,9 @@ const HomeStart = ({
 
   return (
     <>
-      <DetailsContainer height={suggestions.length != 0 ? '60vh' : '50vh'}>
+      <DetailsContainer height={suggestions.length !== 0 ? '60vh' : '50vh'}>
         <TextContainer>Start You Ride Now!</TextContainer>
-        <TextContainer>With AppName</TextContainer>
+        <TextContainer>Jeldi se Jeldi</TextContainer>
         <TextContainer fontSize="12px">
           Nearest Bike Location: {nearestLocation}
         </TextContainer>
@@ -101,9 +126,9 @@ const HomeStart = ({
         </TextInputContainer>
         {showSuggestions()}
         <ButtonWrapper>
-          {text != '' &&
+          {text !== '' &&
           locations.find(
-            (elem) => elem[0].toLowerCase() == text.toLowerCase()
+            (elem) => elem[0].toLowerCase() === text.toLowerCase()
           ) ? (
             <ButtonRoute
               to={homeRide}

@@ -4,14 +4,7 @@ import {BalancePopup} from './BalancePopup';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useHistory} from 'react-router';
 
-function Balance({
-  balance,
-  setBalance,
-  profileDetails,
-  userId,
-  getBal,
-  username,
-}) {
+function Balance({balance, setBalance, userId, getBal, username}) {
   const [bal, setbalance] = useState(parseInt(balance));
   const [buttonpopup, setbuttonpopup] = useState(false);
   const [addmoney, setaddmoney] = useState('');

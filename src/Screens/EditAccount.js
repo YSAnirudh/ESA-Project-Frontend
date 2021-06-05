@@ -4,11 +4,15 @@ import {Form, Row, Col, Button} from 'react-bootstrap';
 import {useState} from 'react';
 import '../CSS/Profile.css';
 import {ButtonWrapper} from './Elements/AccountElem';
-import logo from '../Assets/DL.png';
 import '../CSS/Account.css';
 import {useHistory} from 'react-router';
 
-export default function EditAccount({profiledata, setProfileData, userId}) {
+export default function EditAccount({
+  profiledata,
+  setProfileData,
+  handleGetProfileData,
+  handleEditProfile,
+}) {
   const [email, setemail] = useState(profiledata.email);
   const [username, setusername] = useState(profiledata.username);
   const [phnumber, setphnumber] = useState(profiledata.phoneNo);
@@ -16,6 +20,7 @@ export default function EditAccount({profiledata, setProfileData, userId}) {
 
   const profileDataChange = () => {
     setProfileData(username, phnumber, email, licenseNo);
+    handleEditProfile(username, email, phnumber, licenseNo);
   };
 
   const emailChange = (e) => {
@@ -36,6 +41,7 @@ export default function EditAccount({profiledata, setProfileData, userId}) {
   const history = useHistory();
   const goToAccount = () => {
     history.push('/account');
+    handleGetProfileData();
   };
 
   return (
@@ -133,7 +139,9 @@ export default function EditAccount({profiledata, setProfileData, userId}) {
                       <Button
                         type="submit"
                         className="mybutton"
-                        onClick={goToAccount}
+                        onClick={() => {
+                          goToAccount();
+                        }}
                       >
                         Go Back
                       </Button>

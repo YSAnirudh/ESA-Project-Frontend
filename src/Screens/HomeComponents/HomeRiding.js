@@ -1,29 +1,14 @@
 import React, {useState} from 'react';
 import {useHistory} from 'react-router';
-import {
-  homeRide,
-  homeRiding,
-  homeStart,
-  payment,
-} from '../../Constants/RouteInfo';
-import {
-  BackButtonWrapper,
-  Button,
-  ButtonRoute,
-  ButtonWrapper,
-  DetailsContainer,
-  TextContainer,
-} from '../Elements/HomeElem';
-import Timer from './Timer';
+import {Button, DetailsContainer, TextContainer} from '../Elements/HomeElem';
 
-const HomeRiding = ({location, setIsRiding, userId, vhNo}) => {
-  const [isActive, setIsActive] = useState(true);
-  const [isStopped, setIsStopped] = useState(false);
-  // Send user id and time to backend and it will start counting,
-  // when stop ride, get time, endLocation, price and prompt for payment.
-  //
-  // get amont from backend
-  const amount = 0.0;
+const HomeRiding = ({
+  location,
+  setIsRiding,
+  userId,
+  vhNo,
+  handleGetHistory,
+}) => {
   const his = useHistory();
   const handleOnStopRide = () => {
     fetch('http://localhost:5000/home/endRide', {
@@ -37,14 +22,13 @@ const HomeRiding = ({location, setIsRiding, userId, vhNo}) => {
     })
       .then((response) => response.json())
       .then((res) => {
-        if (res['endLocation'] == 'Noob') {
+        console.log(res);
+        if (res['endLocation'] === 'Noob') {
           var balance = window.confirm(
             'Insufficient Balance.\nGo to Add Money?'
           );
           if (balance) {
             his.push('/account/balance');
-          } else {
-            alert('come back to riding');
           }
         } else {
           var history = window.confirm(
@@ -52,6 +36,7 @@ const HomeRiding = ({location, setIsRiding, userId, vhNo}) => {
           );
           if (history) {
             his.push('/history');
+            handleGetHistory();
           } else {
             his.push('/home/start');
           }
@@ -61,12 +46,12 @@ const HomeRiding = ({location, setIsRiding, userId, vhNo}) => {
       .catch((err) => console.log(err));
   };
 
-  const stopRideOnlyIfNear = () => {};
   return (
     <>
       <DetailsContainer>
         <>
           <TextContainer>Riding from: {location[0]}</TextContainer>
+          <TextContainer>On Vehicle No.: {vhNo}</TextContainer>
           <Button
             onClick={() => {
               handleOnStopRide();
