@@ -19,7 +19,7 @@ function Balance({balance, setBalance, userId, getBal, username}) {
   };
 
   const handleAddMoney = (money) => {
-    fetch('http://localhost:5000/wallet/addMoney', {
+    fetch('http://jeldi.herokuapp.com/wallet/addMoney', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({userId: userId, money: money}),

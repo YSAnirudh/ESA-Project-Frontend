@@ -11,7 +11,7 @@ const HomeRiding = ({
 }) => {
   const his = useHistory();
   const handleOnStopRide = () => {
-    fetch('http://localhost:5000/home/endRide', {
+    fetch('http://jeldi.herokuapp.com/home/endRide', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

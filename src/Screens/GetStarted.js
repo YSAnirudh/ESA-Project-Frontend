@@ -36,7 +36,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
 
   const [locations, setLocations] = useState([]);
   const handleGetLocations = React.useCallback(() => {
-    fetch('http://localhost:5000/home/getRide', {
+    fetch('http://jeldi.herokuapp.com/home/getRide', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     })
@@ -48,7 +48,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
 
   const [profiledata, setProfileData] = useState({});
   const handleGetProfileData = React.useCallback(() => {
-    fetch('http://localhost:5000/details/account', {
+    fetch('http://jeldi.herokuapp.com/details/account', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({userId: userId}),
@@ -69,7 +69,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
     // backend post BIGNOO
   };
   const handleEditProfile = React.useCallback((userN, ema, phno, lno) => {
-    fetch('http://localhost:5000/account/update', {
+    fetch('http://jeldi.herokuapp.com/account/update', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -89,7 +89,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
 
   const [balance, setBalance] = useState(0);
   const handleGetBalance = React.useCallback(() => {
-    fetch('http://localhost:5000/wallet/balance', {
+    fetch('http://jeldi.herokuapp.com/wallet/balance', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({userId: userId}),
@@ -107,7 +107,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
 
   const [bookingHistory, setBookingHistory] = useState([]);
   const handleGetHistory = React.useCallback(() => {
-    fetch('http://localhost:5000/details/history', {
+    fetch('http://jeldi.herokuapp.com/details/history', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({userId: userId}),
@@ -122,7 +122,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
 
   const [userCache, setUserCache] = useState([]);
   const handleGetUserCache = React.useCallback(() => {
-    fetch('http://localhost:5000/home/getCache', {
+    fetch('http://jeldi.herokuapp.com/home/getCache', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({userId: userId}),
@@ -138,7 +138,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
   const [vehicles, setVehicles] = useState([]);
   const [costStr, setCostStr] = useState('');
   const handleGetVehicles = React.useCallback((locat) => {
-    fetch('http://localhost:5000/bike/getVehicles', {
+    fetch('http://jeldi.herokuapp.com/bike/getVehicles', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

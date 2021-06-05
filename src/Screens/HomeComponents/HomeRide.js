@@ -72,7 +72,7 @@ const HomeRide = ({
 
   // const [costStr, setCostStr] = useState('');
   const handlePostLocationAndVhNO = (locat) => {
-    fetch('http://localhost:5000/home/startRide', {
+    fetch('http://jeldi.herokuapp.com/home/startRide', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
