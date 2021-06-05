@@ -62,7 +62,7 @@ function Account(props) {
                 className="my-3"
                 controlId="formHorizontalEmail"
               >
-                <Form.Label>Email</Form.Label>
+            <Form.Label>Email</Form.Label>
                 <Form.Text>{email}</Form.Text>
               </Form.Group>
 

@@ -3,6 +3,9 @@ import {Link} from 'react-router-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import Card from "@material-ui/core/Card";
+import "../../CSS/LoginStyling.css";
+
 //import {homeAfterLogin} from '../../Constants/RouteInfo';
 import { Container, Row, Col } from 'react-bootstrap'
 import {Form, Button,Image} from 'react-bootstrap';
@@ -64,37 +67,50 @@ class Login extends Component {
       //           Don't have an account? <Link to="/register">Register</Link>
       //         </p>
       //       </Col>
-      <Row>
-          <Col xl = {6}>
-            <Form style={{width:"50%",height : "50%", marginLeft:"10%", marginTop:"10%"}}>
-                <Form.Group >
-                    <Form.Label>Enter your PhoneNumber</Form.Label>
-                    <Form.Control 
-                    type="tel" 
-                    placeholder="Enter your Phonenumber" 
-                    onChange={this.onChange}
-                    value={this.state.phoneNo}
-                    id="phoneNo"
-                    />
-                </Form.Group>
-                <br/>
-                <Form.Group >
-                    <Form.Label>Enter your password</Form.Label>
-                    <Form.Control 
-                    type="password" 
-                    placeholder="Enter your password" 
-                    onChange={this.onChange}
-                    value={this.state.password}
-                    id="password"/>
-                </Form.Group>
-                <br/>
-                <Button type="submit" onClick = {this.onSubmit}>Submit</Button>
-            </Form>
-          </Col>
-          <Col xl = {6}>
-            <Image src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRRP3e-HQRp8k0qWIH0myLVZD9fU5qYO5ZMIQ-XfIcruNPX-SWtCeh4y_5vKbi9JXq1c98&usqp=CAU" thumbnail style={{border:"none",width:"80%", marginLeft:"10%", marginTop:"10%"}} /> 
-          </Col>
-          </Row>
+< div className="bod">
+<Card  style={{minWidth:"38%",
+       width:"38%" ,padding:"1.5em", background:" #01BF71",boxShadow: "0 13px 27px -5px hsla(240, 30.1%, 28%, 0.25), 0 8px 16px -8px hsla(0, 0%, 0%, 0.3), 0 -6px 16px -6px hsla(0, 0%, 0%, 0.03)"
+      }} >
+ 
+  <br/>        
+ <Form >
+
+     <Form.Group >
+       <p className = "header">LOGIN</p>
+        <p className = "para">Phonenumber</p> 
+         <Form.Control 
+         type="tel" 
+         placeholder="Enter your Phonenumber" 
+         onChange={this.onChange}
+         value={this.state.phoneNo}
+         id="phoneNo"
+         />
+     </Form.Group>
+     <br/>
+     <Form.Group >
+         <p className = "para">password</p>
+         <Form.Control 
+         type="password" 
+         placeholder="Enter your password" 
+         onChange={this.onChange}
+         value={this.state.password}
+         id="password"/>
+     </Form.Group>
+     <br/>
+     <Button type="submit" onClick = {this.onSubmit} className = "button">Submit</Button>
+     <br/>
+ </Form>
+
+
+<br/>
+      </Card>
+
+
+</ div>
+
+     
+      
+     
            
     );
   }
