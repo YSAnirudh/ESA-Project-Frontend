@@ -11,6 +11,7 @@ export const loginUser = (userData, props, history, setIsLogin) => {
     .then((res) => {
       const {userId} = res.data;
       localStorage.setItem('userId', userId);
+      localStorage.setItem('isLogin', false);
       setIsLogin(false);
       history.push('/home');
       console.log(res);

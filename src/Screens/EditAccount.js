@@ -6,7 +6,8 @@ import '../CSS/Profile.css';
 import {ButtonWrapper} from './Elements/AccountElem';
 import '../CSS/Account.css';
 import {useHistory} from 'react-router';
-
+// const {registerUser} = require('../../actions/regesiter');
+// const {validateRegisterInput} = require('../../validation/registerValidation');
 export default function EditAccount({
   profiledata,
   setProfileData,
@@ -20,6 +21,8 @@ export default function EditAccount({
 
   const profileDataChange = () => {
     setProfileData(username, phnumber, email, licenseNo);
+    // var validate = validateRegisterInput(validateUser);
+    // console.log(validate);
     handleEditProfile(username, email, phnumber, licenseNo);
   };
 

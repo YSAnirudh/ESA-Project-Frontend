@@ -38,7 +38,7 @@ function History({info}) {
                   <td>{item.startLocation}</td>
                   <td>{item.endLocation}</td>
                   <td>{Number((item.duration * 60).toFixed(2))} min</td>
-                  <td>Rs.{item.price}</td>
+                  <td>Rs.{item.price.toFixed(2)}</td>
                 </tr>
               </table>
             </div>

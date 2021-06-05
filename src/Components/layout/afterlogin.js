@@ -36,13 +36,14 @@ const AfterLogin = ({username, setIsLogin}) => {
             primary="true"
             dark="true"
           >
-            Book vechile {hover ? <ArrowForward /> : <ArrowRight />}
+            Book Vehicle {hover ? <ArrowForward /> : <ArrowRight />}
           </Button>
         </HeroBtnWrapper>
         <HeroBtnWrapper>
           <Button
             onClick={() => {
               localStorage.removeItem('userId');
+              localStorage.setItem('isLogin', true);
               setIsLogin(true);
               push('/');
             }}

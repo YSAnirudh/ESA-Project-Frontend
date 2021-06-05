@@ -52,7 +52,7 @@ const SideBar = ({isOpen, toggle, isLogin, isRiding}) => {
               to={isRiding ? homeRiding : homeStart}
               onClick={toggle}
             >
-              Home
+              Start
             </SideBarLink>
             <SideBarLink to={history} onClick={toggle}>
               History

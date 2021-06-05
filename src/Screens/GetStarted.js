@@ -69,7 +69,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
     // backend post BIGNOO
   };
   const handleEditProfile = React.useCallback((userN, ema, phno, lno) => {
-    fetch('http://jeldi.herokuapp.com/account/update', {
+    fetch('http://jeldi.herokuapp.com/details/account/update', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

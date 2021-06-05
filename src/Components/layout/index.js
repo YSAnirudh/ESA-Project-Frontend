@@ -26,7 +26,7 @@ const Landing = () => {
         <VideoBg autoPlay loop muted src={video1} type="video/mp4"></VideoBg>
       </HeroBg>
       <HeroContent>
-        <HeroH1>Welocome to Jeldi</HeroH1>
+        <HeroH1>Welcome to Jeldi</HeroH1>
         <HeroP>
           RENT RIDE RETURN
           <br />
