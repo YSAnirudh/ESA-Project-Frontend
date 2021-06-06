@@ -22,10 +22,9 @@ const HomeRiding = ({
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log(res);
         if (res['endLocation'] === 'Noob') {
           var balance = window.confirm(
-            'Insufficient Balance.\nGo to Add Money?'
+            `Insufficient Balance. Rs.${res['price']}\nGo to Add Money?`
           );
           if (balance) {
             his.push('/account/balance');
@@ -40,7 +39,9 @@ const HomeRiding = ({
           } else {
             his.push('/home/start');
           }
+          localStorage.removeItem('location');
           setIsRiding(false);
+          localStorage.setItem('riding', false);
         }
       })
       .catch((err) => console.log(err));
@@ -51,7 +52,7 @@ const HomeRiding = ({
       <DetailsContainer>
         <>
           <TextContainer>Riding from: {location[0]}</TextContainer>
-          <TextContainer>On Vehicle No.: {vhNo}</TextContainer>
+          <TextContainer>On Vehicle No: {vhNo}</TextContainer>
           <Button
             onClick={() => {
               handleOnStopRide();

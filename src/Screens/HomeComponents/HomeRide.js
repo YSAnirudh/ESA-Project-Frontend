@@ -25,7 +25,9 @@ const HomeRide = ({
   userId,
 }) => {
   const [text, setText] = useState('');
-  const [OTP, setOTP] = useState('0');
+  const [OTP, setOTP] = useState(
+    Math.floor(Math.random() * 900000 + 100000).toString()
+  );
   const changeOTP = () => {
     setOTP(Math.floor(Math.random() * 900000 + 100000).toString());
   };
@@ -81,7 +83,7 @@ const HomeRide = ({
         startLocation: locat[0],
       }),
     })
-      .then((response) => console.log(response.json()))
+      .then((response) => response.json())
       .catch((err) => console.log(err));
   };
 
@@ -149,6 +151,7 @@ const HomeRide = ({
               to={homeRiding}
               onClick={() => {
                 setIsRiding(true);
+                localStorage.setItem('riding', true);
                 setVehNo(vhNo);
                 handlePostLocationAndVhNO(location);
               }}

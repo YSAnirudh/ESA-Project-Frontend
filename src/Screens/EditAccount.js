@@ -22,7 +22,6 @@ export default function EditAccount({
   const profileDataChange = () => {
     setProfileData(username, phnumber, email, licenseNo);
     // var validate = validateRegisterInput(validateUser);
-    // console.log(validate);
     handleEditProfile(username, email, phnumber, licenseNo);
   };
 

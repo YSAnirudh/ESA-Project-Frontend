@@ -14,7 +14,6 @@ export const loginUser = (userData, props, history, setIsLogin) => {
       localStorage.setItem('isLogin', false);
       setIsLogin(false);
       history.push('/home');
-      console.log(res);
     })
     .catch(function (error) {
       if (error.response) {

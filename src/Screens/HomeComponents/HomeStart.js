@@ -39,7 +39,6 @@ const HomeStart = ({
   const calcNearestLocation = (loca, locats) => {
     var min = 100000000000.0;
     var loc = '';
-    console.log(locats);
     for (var i = 0; i < locats.length; i++) {
       var dist = geolib.getDistance(
         {latitude: locats[i][1][0], longitude: locats[i][1][1]},
@@ -51,10 +50,8 @@ const HomeStart = ({
       } else {
         min = min;
       }
-      console.log(loc);
     }
     setNearestLocation(loc);
-    console.log(loc);
   };
 
   const onTextChange = (e) => {
@@ -97,7 +94,7 @@ const HomeStart = ({
   return (
     <>
       <DetailsContainer height={suggestions.length !== 0 ? '60vh' : '50vh'}>
-        <TextContainer>Start You Ride Now!</TextContainer>
+        <TextContainer>Start Your Ride Now!</TextContainer>
         <TextContainer>Jeldi se Jeldi</TextContainer>
         <TextContainer fontSize="12px">
           Nearest Bike Location: {nearestLocation}
@@ -119,6 +116,7 @@ const HomeStart = ({
               size={17}
               onClick={() => {
                 setLocation(locat);
+                localStorage.setItem('location', locat);
                 toggleMap();
               }}
             />
@@ -134,6 +132,7 @@ const HomeStart = ({
               to={homeRide}
               onClick={() => {
                 setLocation(locat);
+                localStorage.setItem('location', locat);
                 getVehicles(locat);
               }}
             >

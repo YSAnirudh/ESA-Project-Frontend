@@ -5,7 +5,6 @@ export const registerUser = (userData, history) => {
     .post('https://jeldi.herokuapp.com/login/register', userData)
     .then((res) => {
       history.push('/login');
-      console.log(res);
     })
     .catch(function (error) {
       if (error.response) {

@@ -26,6 +26,7 @@ import HomeStart from './HomeComponents/HomeStart';
 import HomeRide from './HomeComponents/HomeRide';
 import HomeRiding from './HomeComponents/HomeRiding';
 import AfterLogin from '../Components/layout/afterlogin';
+import usePersistedState from '../persistedState';
 
 function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
   const [userId, setUserId] = useState(localStorage.getItem('userId'));
@@ -81,9 +82,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
       }),
     })
       .then((response) => response.json())
-      .then((res) => {
-        console.log(res);
-      })
+      .then((res) => {})
       .catch((err) => console.log(err));
   }, []);
 
@@ -114,7 +113,6 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log(res);
         setBookingHistory(res);
       })
       .catch((err) => console.log(err));
@@ -129,12 +127,11 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
     })
       .then((response) => response.json())
       .then((res) => {
-        console.log(res);
         setUserCache(res);
       })
       .catch((err) => console.log(err));
   }, []);
-  const [location, setLocation] = useState(['', [0, 0]]);
+  const [location, setLocation] = usePersistedState('location', ['', [0, 0]]);
   const [vehicles, setVehicles] = useState([]);
   const [costStr, setCostStr] = useState('');
   const handleGetVehicles = React.useCallback((locat) => {
@@ -188,7 +185,8 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
     handleGetHistory,
   ]);
 
-  const [isRiding, setIsRiding] = useState(
+  const [isRiding, setIsRiding] = usePersistedState(
+    'riding',
     userCache.length === 0 ? false : true
   );
   return (
@@ -276,7 +274,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
                 location={location}
                 setIsRiding={setIsRiding}
                 userId={userId}
-                vhNo={vhNo}
+                vhNo={userCache.length === 0 ? vhNo : userCache[0].vehicleId}
                 handleGetHistory={handleGetHistory}
               />
             </PageContainer>

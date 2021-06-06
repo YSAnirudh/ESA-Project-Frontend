@@ -37,7 +37,6 @@ function Home({
       </PageContainer>
     );
   } else if (!isHomeStart && isHomeRide) {
-    console.log('noob');
     return (
       <>
         <PageContainer>

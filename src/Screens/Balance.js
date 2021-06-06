@@ -15,7 +15,6 @@ function Balance({balance, setBalance, userId, getBal, username}) {
 
   const addMoney = (e) => {
     setaddmoney(e.target.value);
-    //console.log(addmoney)
   };
 
   const handleAddMoney = (money) => {
@@ -33,6 +32,10 @@ function Balance({balance, setBalance, userId, getBal, username}) {
   };
 
   const addedMoney = (e) => {
+    if (addmoney <= 0) {
+      alert('Money should be > 0 Rs');
+      return;
+    }
     setbuttonpopup(false);
     setaddmoney('');
     handleAddMoney(addmoney);

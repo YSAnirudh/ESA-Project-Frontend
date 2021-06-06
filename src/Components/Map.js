@@ -22,8 +22,8 @@ function Maps({isMapVisible, toggleMap, locations, setLocation, userLoc}) {
             {location[0]}
             <Button
               onClick={() => {
-                // console.log(location);
                 setLocation(location);
+                localStorage.setItem('location', location);
                 toggleMap();
               }}
             >
