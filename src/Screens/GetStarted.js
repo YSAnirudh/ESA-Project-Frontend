@@ -284,7 +284,19 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
                 location={JSON.parse(localStorage.getItem('location'))}
                 setIsRiding={setIsRiding}
                 userId={userId}
-                vhNo={userCache.length === 0 ? vhNo : userCache[0].vehicleId}
+                vhNo={
+                  userCache.length === 0
+                    ? vhNo
+                    : userCache[
+                        userCache.findIndex((elem, index) => {
+                          if (elem.userId === userId) {
+                            return true;
+                          } else {
+                            return false;
+                          }
+                        })
+                      ].vehicleId
+                }
                 handleGetHistory={handleGetHistory}
               />
             </PageContainer>
