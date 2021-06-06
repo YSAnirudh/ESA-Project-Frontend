@@ -23,7 +23,7 @@ function Maps({isMapVisible, toggleMap, locations, setLocation, userLoc}) {
             <Button
               onClick={() => {
                 setLocation(location);
-                localStorage.setItem('location', location);
+                localStorage.setItem('location', JSON.stringify(location));
                 toggleMap();
               }}
             >

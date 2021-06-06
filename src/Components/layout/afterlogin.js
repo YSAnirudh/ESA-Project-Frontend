@@ -14,7 +14,7 @@ import {
 import video1 from '../../Videos/video1.mp4';
 import {useHistory} from 'react-router-dom';
 
-const AfterLogin = ({username, setIsLogin}) => {
+const AfterLogin = ({username, setIsLogin, isRiding}) => {
   const [hover, setHover] = useState(false);
   const onHover = () => {
     setHover(!hover);
@@ -30,7 +30,13 @@ const AfterLogin = ({username, setIsLogin}) => {
         <HeroP></HeroP>
         <HeroBtnWrapper>
           <Button
-            onClick={() => push('/home/start')}
+            onClick={() => {
+              if (!isRiding) {
+                push('/home/start');
+              } else {
+                push('/home/riding');
+              }
+            }}
             onMouseEnter={onHover}
             onMouseLeave={onHover}
             primary="true"

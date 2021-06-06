@@ -24,7 +24,7 @@ const HomeRiding = ({
       .then((res) => {
         if (res['endLocation'] === 'Noob') {
           var balance = window.confirm(
-            `Insufficient Balance. Rs.${res['price']}\nGo to Add Money?`
+            `Insufficient Balance. To Pay: Rs.${res['price']}\nGo to Add Money?`
           );
           if (balance) {
             his.push('/account/balance');
@@ -51,6 +51,7 @@ const HomeRiding = ({
     <>
       <DetailsContainer>
         <>
+          <TextContainer>Your Ride is going on!</TextContainer>
           <TextContainer>Riding from: {location[0]}</TextContainer>
           <TextContainer>On Vehicle No: {vhNo}</TextContainer>
           <Button

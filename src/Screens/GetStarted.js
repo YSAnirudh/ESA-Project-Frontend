@@ -201,11 +201,21 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
       <Switch>
         <Route
           exact
+          path="/"
+          render={() => {
+            if (!isLogin) {
+              return <Redirect to="/home" />;
+            }
+          }}
+        />
+        <Route
+          exact
           path={homeAfterLogin}
           component={() => (
             <AfterLogin
               username={profiledata.username}
               setIsLogin={setIsLogin}
+              isRiding={isRiding}
             />
           )}
         />
@@ -271,7 +281,7 @@ function Start({isOpen, updateIsOpen, isLogin, updateIsLogin, setIsLogin}) {
             <PageContainer>
               <BackVid />
               <HomeRiding
-                location={location}
+                location={JSON.parse(localStorage.getItem('location'))}
                 setIsRiding={setIsRiding}
                 userId={userId}
                 vhNo={userCache.length === 0 ? vhNo : userCache[0].vehicleId}

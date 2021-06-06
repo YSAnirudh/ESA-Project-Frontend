@@ -116,7 +116,6 @@ const HomeStart = ({
               size={17}
               onClick={() => {
                 setLocation(locat);
-                localStorage.setItem('location', locat);
                 toggleMap();
               }}
             />
@@ -132,7 +131,7 @@ const HomeStart = ({
               to={homeRide}
               onClick={() => {
                 setLocation(locat);
-                localStorage.setItem('location', locat);
+                localStorage.setItem('location', JSON.stringify(locat));
                 getVehicles(locat);
               }}
             >

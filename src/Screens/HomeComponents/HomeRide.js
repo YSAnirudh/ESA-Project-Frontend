@@ -25,12 +25,8 @@ const HomeRide = ({
   userId,
 }) => {
   const [text, setText] = useState('');
-  const [OTP, setOTP] = useState(
-    Math.floor(Math.random() * 900000 + 100000).toString()
-  );
-  const changeOTP = () => {
-    setOTP(Math.floor(Math.random() * 900000 + 100000).toString());
-  };
+  const [OTP, setOTP] = useState(OTP);
+  const changeOTP = () => {};
 
   // POST the locations info and get back list of vehicles
 
@@ -62,14 +58,20 @@ const HomeRide = ({
     }
   };
 
+  useEffect(() => {
+    if (typeof OTP === 'undefined') {
+    } else {
+      alert(`OTP: ${OTP}`);
+    }
+  }, [OTP]);
+
   const vehicleSelected = (value) => {
     setVhNo(value);
     setOpenDraw(false);
   };
 
-  const giveAlert = () => {
-    changeOTP();
-    alert(`OTP: ${OTP}`);
+  const giveAlert = async () => {
+    setOTP(Math.floor(Math.random() * 900000 + 100000).toString());
   };
 
   // const [costStr, setCostStr] = useState('');
@@ -176,7 +178,7 @@ const HomeRide = ({
           <ButtonRoute
             to={homeRide}
             onClick={() => {
-              alert(`Wrong OTP ${OTP}`);
+              alert(`Wrong OTP`);
             }}
           >
             Start Ride
